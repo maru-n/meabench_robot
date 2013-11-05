@@ -100,7 +100,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_mea_scope_OBJECTS = scope_main.$(OBJEXT) FreezeInfo.$(OBJEXT) \
+am_mea_scope_OBJECTS = mea_scope.$(OBJEXT) FreezeInfo.$(OBJEXT) \
 	Scope.$(OBJEXT) QScope.$(OBJEXT) QMultiScope.$(OBJEXT)
 am__objects_1 = ScopeD.$(OBJEXT) ScopeD.moc.$(OBJEXT) \
 	Scope.moc.$(OBJEXT) FreezeInfo.moc.$(OBJEXT) \
@@ -264,7 +264,7 @@ top_srcdir = @top_srcdir@
 noinst_HEADERS = Defs.H FreezeInfo.H QMultiScope.H QScope.H Scope.H \
 	scrolltest.H Scope.ui Scope.ui.h
 
-mea_scope_SOURCES = scope_main.C FreezeInfo.C Scope.C QScope.C QMultiScope.C
+mea_scope_SOURCES = mea_scope.C FreezeInfo.C Scope.C QScope.C QMultiScope.C
 nodist_mea_scope_SOURCES = $(BUILT_SOURCES)
 BUILT_SOURCES = ScopeD.C ScopeD.H ScopeD.moc.C Scope.moc.C \
 	FreezeInfo.moc.C QScope.moc.C QMultiScope.moc.C
@@ -370,7 +370,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scope.moc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ScopeD.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ScopeD.moc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scope_main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mea_scope.Po@am__quote@
 
 .C.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -18,7 +18,7 @@
 
 bin_PROGRAMS = mea_neurosock
 noinst_HEADERS = Error.H MedianFlt.H Neurosock.H Defs.H srvCMOS.H srvMeata.H FrameBuffer.H Mutex.H
-EXTRA_mea_neurosock_SOURCES = neurosock_main.C Neurosock.C srvCMOS.C
-mea_neurosock_SOURCES = neurosock_main.C Neurosock.C FrameBuffer.C srvCMOS.C
+EXTRA_mea_neurosock_SOURCES = mea_neurosock.C Neurosock.C srvCMOS.C
+mea_neurosock_SOURCES = mea_neurosock.C Neurosock.C FrameBuffer.C srvCMOS.C
 
 INCLUDES=-I$(top_srcdir)
