@@ -1,0 +1,147 @@
+Compilation for Meabench modified by Douglas Bakkum 2009 
+for use with high density CMOS multi-electrode arrays:
+
+  ./configure
+  make
+  make install
+
+Typing 'make install' will put executable programs and shared libraries in 
+/usr/local/bin and /usr/local/lib by default; you need to be sudo user in this 
+case. To specify a custom directory, use './configure --prefix=[directory]'. 
+Type './configure --help' for a full list of options.
+
+Meabench uses qt3 to display data. IMPORTANT: Be sure to compile qt3 with 
+multithreading capabilities (try "./configure -thread"). If during Meabench 
+compilation, qt libraries cannot be found, set the qt path. For example: 
+
+  export QTDIR=/usr/local/qt
+
+if this is the location of qt3. If you have troubles finding the qt3 directory,
+look at the output of "/usr/bin/pkg-config --variable=prefix QtCore", which 
+will likely give the qt4 directory, and look in this location for the qt3 directory.
+
+
+
+Using Meabench - quick start:
+
+.0) start HiDens server (ThreadedServer) and begin streaming data from a chip in slot 4 (slot 'e')
+.1) run neurosock/neurosock
+.2) run rawsrv/nssrv; type 'slot [n]' with the number of the slot where the chip is plugged, and then 'run' in the command line
+.3) run scope/scope
+
+
+Using Meabench - details:
+
+.1) Run neurosock in the neurosock directory. This will connect to 
+the HiDens server program (ThreadedServer) to receive data.
+
+.2) Run nssrv in the rawsrv directory. This connects to neurosock, and
+begins streaming data into Meabench. Ideally, nssrv would connect to the
+HiDens server itself; neurosock was used because it was easier to 
+modify to read from the HiDens server. Note that these 2 programs communicate 
+via TCP/IP sockets, and so nssrv can be run on a remote computer if desired.
+Type 'run' in the command line to begin streaming data. Type '?' in the command
+line for a list of available commands.
+
+.3) Run scope in the scope directory. This will display the data in a grid or 
+by electrode location (check 'box'). Send a configuration using the CmdGui. 
+Click 'Arrange' to arrange electrode locations after updating the channel 
+configuration. After arranging electrode locations, raw traces are overlaid 
+in the bottom right corner in 'grid-view' in order to determine if an offset is 
+needed. Click 'DC Offset' to apply DC offsets. (Due to a problem in the 
+ThreadedServer, the DC offsetting takes a few seconds. As an alternative, 
+increasing the Mosr values in the AVR shell, via the FPGA, can center traces 
+nicely.)
+
+.Extra) Meabench contains tools for artifact suppression (artifilt/salpa), 
+spike detection (spikesrv/spikedet), spike or raw or salpa data recording 
+(record/record), and replay of recorded data (replay/replay). See the Meabench
+manual for details. Note that salpa has not been extensively tested with the
+modified Meabench, so bugs may exist.
+
+.Modifications) If you modify any code for a module, just type 'make' in its 
+sub-directory to recompile only that module. I tried to keep all functions 
+that communicate with the ThreadedServer or the FPGA in the 
+common/CMOSServerTools.H file.
+
+
+IMPORTANT - The maximum shared memory size may need to be increased. The default value is 32MB but 64MB is needed. Add this line in "/etc/sysctl.conf":
+
+    kernel.shmmax = 67108864
+
+
+
+
+----------- old README below for standard MeaBench --------------------
+
+MEABENCH IS FREE SOFTWARE AS DEFINED BY THE GPL. THIS PROGRAM IS
+DISTRIBUTED IN THE HOPE THAT IT WILL BE USEFUL, BUT WITHOUT ANY
+WARRANTY; WITHOUT EVEN THE IMPLIED WARRANTY OF MERCHANTABILITY OR
+FITNESS FOR A PARTICULAR PURPOSE. PLEASE SEE THE FILE "COPYING" FOR
+DETAILS.
+
+This is the README file for MEABench, a suite of programs for analysis
+of MEA data. Please see the documentation in the directory "doc", as
+well as the web-site http://www.its.caltech.edu/~wagenaar/meabench for
+more details. Generic compilation instructions are in "INSTALL". On
+recent linux systems, compilation should be as simple as:
+
+  ./configure --with-hardware=mcs --prefix=/opt/meabench
+  make
+  su
+  <type your root password>
+  make install
+
+This would put the MEABench code in /opt/meabench, with executables in
+/opt/meabench/bin. If you are using a 2.6 kernel, it will also put the
+MCCard.ko driver module in the appropriate /lib/modules directory, so
+you can load the driver simply by "modprobe MCCard".
+
+You can either proceed to add /opt/meabench/bin to your path, or copy
+the (script) file "mea" from /opt/meabench/bin to /usr/local/bin or
+some such, and subsequently run MEABench programs by prefixing their
+names with "mea " like this:
+
+  mea spikedet
+
+instead of plain
+
+  spikedet
+
+To compile MEABench, you need the following other software installed
+on your computer:
+
+  - gcc and the gnu c++ compiler, version 3.0.0 or later
+  - make, gnu version 3.79 or later
+  - perl, version 5.6.0 or later
+  - qt3 (qt4 will not work)
+  - the sources for a 2.4.x or 2.6.x kernel
+
+If you have a recent linux distribution, you may
+very well already have all of those installed on your system.
+
+To help develop MEABench, you'll also need
+
+  - automake, version 1.4 or later
+  - autoconf, version 2.13 or later
+
+(Earlier versions of these programs may also work, but if you
+encounter compilation problems, be sure to try upgrading to recent
+versions before submitting a bug report. In particular, qt versions
+below 3.0 will not work.)
+
+If you use MEABench for neuroscience research, chances are that your
+publications are of interest to me, so I'd love to receive any
+(p)reprints resulting from your work.
+
+Feel free to contact me if you have any questions, suggestions or bug
+reports. I hope this program will be useful!
+
+  Daniel Wagenaar
+  UC San Diego, Neurobiology Section
+  9500 Gilman Drive m/c 0357
+  La Jolla, CA 92093
+  USA
+
+  dwagenaar@ucsd.edu
+  +1-(858)-534 4763

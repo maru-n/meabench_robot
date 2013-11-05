@@ -1,0 +1,21 @@
+Data filename:        cmos-test.raw
+Creating program:     record (meabench)
+Creating user:        bakkum,,, (bakkum)
+Start date:           Thu Dec 11 15:50:10 2008
+Date:                 Thu Dec 11 15:50:15 2008
+End date:             Thu Dec 11 15:50:15 2008
+Comments:             
+Data type:            raw
+Immediate source:     raw
+Buffer use percentages: 3
+Recording terminated by: End of source stream
+Triggered:            No
+Hardware:             No hardware problems detected
+Digital zero:         2048
+Digital min. rail:    0
+Digital max. rail:    4095
+Nominal half range:   2048
+Raw sample freq:      20 kHz
+Gain:                 0.333496 uV/digistep [+- 683 uV range]
+Aux gain:             0.400195 mV/digistep [+- 819.6 uV range]
+Run length:           4.947 s

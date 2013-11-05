@@ -1,0 +1,34 @@
+#!/bin/bash
+
+echo
+echo    mea-startup is a script to open the windows needed for running Meabench.
+echo    Douglas Bakkum, 2010
+echo
+echo    Notes:
+echo -- To start getting data into Meabench, connect a chip and start streaming data to the server. Then set the \'slot\' and type \'run\' in mea-nssrv. 
+echo -- Type a \'?\' to get a list of Meabench commands for each module.
+echo -- Push the \'center\' button on the scope to center the recorded voltage traces. 
+echo -- Use the CmdGui to set chip and configuration parameters. 
+echo -- After setting a configuration, push the \'arrange\' button and de-select the \'box\' checkbox in mea-scope to see the configured electrode arrangement.
+echo
+echo
+
+# export LD_LIBRARY_PATH=/usr/local/hima/meabench/current/lib/:$LD_LIBRARY_PATH
+
+gnome-terminal --geometry=60x5+20+20     --hide-menubar -x rlwrap bin/mea_neurosock &
+gnome-terminal --geometry=60x5+20+140    --hide-menubar -x rlwrap bin/mea_nssrv usetrig:1 bl:.3 trigth:2200 conf:1000 &
+gnome-terminal --geometry=60x5+20+255    --hide-menubar -x rlwrap bin/mea_salpa so:raw pegon:1,2 &
+gnome-terminal --geometry=60x5+20+370    --hide-menubar -x rlwrap bin/mea_spikedet so:raw ty:8   &
+gnome-terminal --geometry=60x5+20+485    --hide-menubar -x rlwrap bin/mea_record so:spike        &
+gnome-terminal --geometry=60x5+20+600    --hide-menubar -x rlwrap bin/mea_record &
+gnome-terminal --geometry=60x5+20+715    --hide-menubar -x rlwrap bin/mea_replay &
+gnome-terminal --geometry=60x10+20+830   --hide-menubar -x        bin/mea_scope  &
+
+
+gnome-terminal --geometry=30x20+1700+450 --hide-menubar -x FPGAterminal &
+gnome-terminal --geometry=30x5+1700+1000 --hide-menubar -x CmdGui & 
+
+#cd /<path_to_storage_directory>/ntk/
+gnome-terminal --geometry=30x3+1700+370  --hide-menubar -x server & 
+
+

@@ -1,0 +1,169 @@
+function [Burst SpikeBurstNumber] = BurstDetectISIn( Spike, Parameters )
+%    ISI_N burst detector
+%    by Douglas Bakkum 2013:  
+% 
+%    [Burst SpikeBurstNumber] = burstDetectISIn( Spike.T, Parameters)
+%
+%           'Spike' is a structure with members:
+%                   Spike.T             Vector of spike times [sec]
+%                   Spike.C (optional)  Vector of spike channels 
+%
+%           'Parameters' is a structure with members:   
+%                   Parameters.N       [number] N spikes within ISIn seconds satisfies burst condition.
+%                   Parameters.ISIn    [sec]    N spikes within ISIn seconds satisfies burst condition.
+%                
+%
+%           Returns Burst information and the Burst Number for each spike time:
+%
+%                   Burst.T_start       Burst start time [sec]
+%                   Burst.T_end         Burst end time   [sec]
+%                   Burst.S             Burst size (number spikes)
+%                   Burst.C             Burst size (number channels)
+%
+%                   SpikeBurstNumber    Burst number of spike ([-1] if not in a burst).
+% 
+%
+
+
+
+%% %% TO DO
+%
+%   should not need condition about if burst is not long enough....
+%
+
+
+%% Find when conditions are met
+
+    fprintf('\n');
+    
+%     Criteria  = zeros(size(Spike.T));    
+%     
+%     % Detect for first N spikes
+%     if diff( Spike.T([1 Parameters.N]) ) <= Parameters.ISIn        % In burst, so assign burst number
+%         for j = i:i+Parameters.N-1
+%             Criteria(j) = 1;
+%         end
+%     end
+%     
+%     
+%     % Detect for other spikes
+%     i = 0;
+%     while i < length(Spike.T)
+%         i = i+1;
+%         if diff( Spike.T([i i+Parameters.N-1]) ) <= Parameters.ISIn        % In burst, so assign burst number
+%             Criteria(i+Parameters.N-1) = 1;
+%         end        
+%     end
+%     
+    
+ 
+    % Look both directions from each spike to find if the ISIn criteria is met
+    dT = zeros(Parameters.N,length(Spike.T))+inf;
+    for j = 0:Parameters.N-1
+        dT(j+1,[Parameters.N:length(Spike.T)-(Parameters.N-1)]) = Spike.T( [Parameters.N:end-(Parameters.N-1)]+j ) - Spike.T( [1:end-(Parameters.N-1)*2]+j ); 
+    end     
+           
+    Criteria = zeros(size(Spike.T));           % Initialize to zero
+    Criteria(  min(dT)<=Parameters.ISIn ) = 1; % Spike passes condition if it is included in a set of N spikes with ISIn <= threshold
+    
+        
+
+
+%% Assign burst numbers to each spike
+
+SpikeBurstNumber  = zeros(size(Spike.T))-1;
+
+INBURST  =  0; % Spike is in burst (1) or not (0)
+NUMBER   =  0; % Burst Number iterator
+N        = -1; % Burst Number assigned
+BL       =  0; % Burst Length
+
+reverseStr = '';
+for i = Parameters.N:length(Spike.T)
+   
+    if INBURST == 0                               % Is not in burst 
+        if  Criteria(i)                           % But criteria met, so now in new burst
+            INBURST  = 1;                         %  - update -
+            NUMBER   = NUMBER+1;
+            N        = NUMBER;
+            BL       = 1;
+        else                                      % Still not in burst, so continue  
+        	% continue;
+        end
+        
+    else                                          % Is in burst
+        if  ~ Criteria(i)                         % But criteria no longer met
+            INBURST  =  0;                        %  - update -
+            if BL<Parameters.N                    % Check if burst is big enough, if not erase. (may be too small due to conditions below)
+                SpikeBurstNumber(SpikeBurstNumber==N) = -1;
+                NUMBER = NUMBER-1;
+            end
+            N        = -1;
+        elseif diff(Spike.T([i-(Parameters.N-1) i])) > Parameters.ISIn  &&  BL >= Parameters.N
+                                                  % Don't update if at start of burst (BL<FRnum)
+            NUMBER   = NUMBER+1;                  % New burst, update burst number
+            N        = NUMBER;
+            BL       = 1;
+        else                                      % Criterias still met, so continue
+            BL       = BL + 1;
+            % continue
+        end
+    end
+    
+    SpikeBurstNumber(i)  = N;
+    
+%     if(~mod(i,100000)), 
+%         msg = sprintf('%2.0f%% assigned to Sort.Burst_N.\n',100*i/length(Spike.T));
+%         fprintf([reverseStr, msg]);
+%         reverseStr = repmat(sprintf('\b'), 1, length(msg));    
+%         drawnow('update')
+%     end    
+end
+        
+    
+%% Assign Burst info
+
+
+NB            = max(SpikeBurstNumber);
+Burst.T_start = zeros(1,NB);
+Burst.T_end   = zeros(1,NB);
+Burst.S       = zeros(1,NB); % Size (total spikes)
+Burst.C       = zeros(1,NB); % Size (total channels)
+
+for i = 1:NB
+    xx = find(SpikeBurstNumber==i);
+    
+    if length(xx)<Parameters.N % Not possible to have burst smaller than FRnum ... 
+        SpikeBurstNumber(xx) = -10;   % Erase burst
+        beep
+        disp 'Error: burst too small'
+        %continue;
+    end        
+    
+    Burst.T_start(i) = Spike.T(xx(1));
+    Burst.T_end(i)   = Spike.T(xx(end));
+    Burst.S(i)       = length(xx);
+    if isfield(Spike,'C')
+        Burst.C(i)   = length(unique(Spike.C(xx)));
+    end
+    
+%     if(~mod(i,200))
+%         msg = sprintf('%2.0f%% assigned to Sort.Burst_N.\n',100*i/length(Spike.T)); 
+%         fprintf([reverseStr, msg]);
+%         reverseStr = repmat(sprintf('\b'), 1, length(msg));    
+%         drawnow('update')
+%     end
+    
+end
+
+fprintf('Finished burst detection using %0.2f minutes of spike data.\n',diff(Spike.T([1 end]))/60);
+
+
+
+
+
+
+
+
+
+
