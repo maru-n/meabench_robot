@@ -45,7 +45,7 @@ done
 
 AC_MSG_CHECKING([for qapplication.h])
 AC_CACHE_VAL(ac_cv_hdr_qt,
-  [ac_save_CPPFLAGS="$CPPFLAGS" 
+  [ac_save_CPPFLAGS="$CPPFLAGS"
    CPPFLAGS="$CPPFLAGS -I$MYQT/include"
    AC_TRY_COMPILE([
        #include <qapplication.h>
@@ -70,7 +70,7 @@ fi
 AC_MSG_CHECKING([for qVersion in -lqt-mt])
 AC_CACHE_VAL(ac_cv_lib_qt,
   [ac_save_LIBS="$LIBS"
-   ac_save_CPPFLAGS="$CPPFLAGS" 
+   ac_save_CPPFLAGS="$CPPFLAGS"
    LIBS="-L$MYQT/lib -lqt-mt $LIBS"
    CPPFLAGS="$CPPFLAGS -I$MYQT/include"
    AC_TRY_LINK([
@@ -87,7 +87,7 @@ if eval test "$ac_cv_lib_qt = no"; then
   AC_MSG_CHECKING([for qVersion in -lqt])
   AC_CACHE_VAL(ac_cv_lib_qt,
     [ac_save_LIBS="$LIBS"
-     ac_save_CPPFLAGS="$CPPFLAGS" 
+     ac_save_CPPFLAGS="$CPPFLAGS"
      LIBS="-L$MYQT/lib -lqt $LIBS"
      CPPFLAGS="$CPPFLAGS -I$MYQT/include"
      AC_TRY_LINK([
@@ -164,7 +164,7 @@ AC_CHECK_FUNCS(getcwd gettimeofday mkdir select socket strerror)
 
 dnl Check for kernel includes
 AC_MSG_CHECKING([for kernel include files])
-AC_ARG_WITH(kernel, [ --with-kernel=KERNEL_PATH   Define the location of the 
+AC_ARG_WITH(kernel, [ --with-kernel=KERNEL_PATH   Define the location of the
 	                   kernel include files. Default: /lib/modules/`uname -r`/build ],[
 	KERNEL_DIR=$withval ],[
 	KERNEL_DIR=/lib/modules/`uname -r`/build ])
@@ -211,6 +211,7 @@ AC_OUTPUT( \
           spikesrv/Makefile \
           replay/Makefile \
           record/Makefile \
+          robot/Makefile \
           scope/Makefile \
           artifilt/Makefile \
           rawsrv/Makefile \

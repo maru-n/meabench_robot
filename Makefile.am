@@ -17,10 +17,10 @@
 
 SUBDIRS=base common gui tools rms\
 	neurosock \
-	rawsrv spikesrv replay record \
+	rawsrv spikesrv replay record robot \
 	artifilt \
-	scope 
-#	utils 
+	scope
+#	utils
 
 noinst_HEADERS = Makefile.moc Makefile.base Makefile.gui Makefile.tools \
 	announce.txt bootstrap
@@ -39,5 +39,5 @@ SALPAFILES=base/Timeref.H base/Error.H base/Sprintf.H base/dbx.H \
 	artifilt/LocalFit.H \
 	artifilt/LocalFit.C artifilt/posthocartifilt.C
 solosalpa-build:;
-	./solosalpa-grab ${SALPAFILES} 
+	./solosalpa-grab ${SALPAFILES}
 	make -C solosalpa dist
