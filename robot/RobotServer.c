@@ -1,24 +1,6 @@
-/* record/StreamRec.C: part of meabench, an MEA recording and analysis tool
-** Copyright (C) 2000-2002  Daniel Wagenaar (wagenaar@caltech.edu)
-**
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by
-** the Free Software Foundation; either version 2 of the License, or
-** (at your option) any later version.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+// RobotServer.C
 
-// StreamRec.C
-
-#include "StreamRec.H"
+#include "RobotServer.H"
 
 #include <record/Recorder.H>
 #include <record/SpikeRecorder.H>
@@ -173,20 +155,20 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 
-StreamRec::StreamRec(string const &stream, string const &type,
-                     string const &basefn,
-                     bool describe, bool usestream,
-                     bool evenifexists) throw(Error)
+RobotServer::RobotServer(string const &stream, string const &type,
+                         string const &basefn,
+                         bool describe, bool usestream,
+                         bool evenifexists) throw(Error)
 {
     trig = false;
     construct(stream, type, basefn, describe, usestream, evenifexists);
 }
 
-StreamRec::StreamRec(string const &stream, string const &type,
-                     int pretrig0, int posttrig0,
-                     string const &basefn,
-                     bool describe, bool usestream,
-                     bool evenifexists) throw(Error)
+RobotServer::RobotServer(string const &stream, string const &type,
+                         int pretrig0, int posttrig0,
+                         string const &basefn,
+                         bool describe, bool usestream,
+                         bool evenifexists) throw(Error)
 {
     trig = true;
     construct(stream, type, basefn, describe, usestream, evenifexists);
@@ -194,10 +176,10 @@ StreamRec::StreamRec(string const &stream, string const &type,
 }
 
 
-void StreamRec::construct(string const &stream, string const &type,
-                          string const &basefn,
-                          bool describe0, bool usestream,
-                          bool evenifexists) throw(Error)
+void RobotServer::construct(string const &stream, string const &type,
+                            string const &basefn,
+                            bool describe0, bool usestream,
+                            bool evenifexists) throw(Error)
 {
     sleeper = 0;
     source = 0;
@@ -259,7 +241,7 @@ void StreamRec::construct(string const &stream, string const &type,
         {
             trigfh = fopen(trigname.c_str(), "w");
             if (!trigfh)
-                throw SysErr("StreamRec", "Cannot write to trigger file");
+                throw SysErr("RobotServer", "Cannot write to trigger file");
         }
     }
     catch (...)
@@ -279,10 +261,10 @@ void StreamRec::construct(string const &stream, string const &type,
     }
 }
 
-StreamRec::~StreamRec()
+RobotServer::~RobotServer()
 {
     if (hasthread)
-        fprintf(stderr, "Warning: destructing StreamRec without terminating thread. This is a BUG.\n");
+        fprintf(stderr, "Warning: destructing RobotServer without terminating thread. This is a BUG.\n");
     if (sleeper)
         delete sleeper;
     if (source)
@@ -293,21 +275,21 @@ StreamRec::~StreamRec()
         fclose(trigfh);
 }
 
-void StreamRec::run(int lim_s) throw(Error)
+void RobotServer::run(int lim_s) throw(Error)
 {
     if (hasthread)
-        throw Error("StreamRec", "Already running");
+        throw Error("RobotServer", "Already running");
 
     limit_s = lim_s;
 
     if (pthread_attr_init(&attr))
-        throw SysErr("StreamRec", "Cannot create thread attributes");
-    if (pthread_create(&thread, &attr, &StreamRec::thread_code, (void *)this))
-        throw SysErr("StreamRec", "Cannot create thread");
+        throw SysErr("RobotServer", "Cannot create thread attributes");
+    if (pthread_create(&thread, &attr, &RobotServer::thread_code, (void *)this))
+        throw SysErr("RobotServer", "Cannot create thread");
     hasthread = true;
 }
 
-StreamRec::TerminationCode StreamRec::wait() throw(Error)
+RobotServer::TerminationCode RobotServer::wait() throw(Error)
 {
     if (!hasthread)
         return NOTRUNNING;
@@ -316,14 +298,14 @@ StreamRec::TerminationCode StreamRec::wait() throw(Error)
     {
         //    if (errno==ESRCH)
         //      return; // thread no longer exists
-        throw SysErr("StreamRec", "Thread can't be joined");
+        throw SysErr("RobotServer", "Thread can't be joined");
     }
     return termination_code;
 }
 
-void *StreamRec::thread_code(void *arg)
+void *RobotServer::thread_code(void *arg)
 {
-    StreamRec *me = (StreamRec *)arg;
+    RobotServer *me = (RobotServer *)arg;
     try
     {
         me->exec();
@@ -336,7 +318,7 @@ void *StreamRec::thread_code(void *arg)
     return 0; // never executed - prevents compiler warning
 }
 
-void StreamRec::exec()
+void RobotServer::exec()
 {
     termination_code = INCOMPLETE;
     string termination = "Incomplete";
@@ -355,9 +337,9 @@ void StreamRec::exec()
     /////////// CONNECT TO THREADSERV HERE ? ////////////////
     //// GET SLOT FROMN SOURCE
     //  SpikeSFCli *tmpsrc = dynamic_cast<SpikeSFCli*>(source);
-    //fprintf(stderr,"StreamRec.C   %lli \n",source->latest()); // works
-    //fprintf(stderr,"StreamRec.C   %i \n",source->auxsize()); // works
-    //fprintf(stderr,"StreamRec.C   %i \n",slot);
+    //fprintf(stderr,"RobotServer.C   %lli \n",source->latest()); // works
+    //fprintf(stderr,"RobotServer.C   %i \n",source->auxsize()); // works
+    //fprintf(stderr,"RobotServer.C   %i \n",slot);
     ////*MEAB::rawout->sfsrv.aux() = *MEAB::rawin->sfcli.aux();
 
 
@@ -516,7 +498,7 @@ void StreamRec::exec()
     }
 }
 
-void StreamRec::ensurenonexistent(string const &fn) throw(Error)
+void RobotServer::ensurenonexistent(string const &fn) throw(Error)
 {
     struct stat s;
     int r = stat(fn.c_str(), &s);
@@ -524,5 +506,5 @@ void StreamRec::ensurenonexistent(string const &fn) throw(Error)
         return; // non-exist, so good
     if (s.st_size == 0)
         return;
-    throw Expectable("StreamRec", Sprintf("File exists - won't record. Use `!rm %s' to delete it", fn.c_str()));
+    throw Expectable("RobotServer", Sprintf("File exists - won't record. Use `!rm %s' to delete it", fn.c_str()));
 }

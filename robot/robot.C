@@ -22,7 +22,8 @@
 #include <common/MEAB.H>
 #endif
 
-#include "StreamRec.H"
+//#include "StreamRec.H"
+#include "RobotServer.H"
 #include "SourceSet.H"
 
 #include <string>
@@ -121,7 +122,7 @@ void dorec(string fn, bool date,
     sdbx("(start of rec) rerec_fn now set to: %s. ok=%c safe=%c", rerec_fn.c_str(),
          rerec_ok ? 'y' : 'n', rerec_safe ? 'y' : 'n');
 
-    vector<StreamRec *> srec;
+    vector<RobotServer *> srec;
 
     bool usestream = sources.needsstream();
 
@@ -129,12 +130,12 @@ void dorec(string fn, bool date,
     {
         try
         {
-            StreamRec *sr = 0;
+            RobotServer *sr = 0;
             if (trig)
-                sr = new StreamRec((*i).stream, (*i).type, pretrig, posttrig,
+                sr = new RobotServer((*i).stream, (*i).type, pretrig, posttrig,
                                    fn, describe, usestream, evenifexists);
             else
-                sr = new StreamRec((*i).stream, (*i).type,
+                sr = new RobotServer((*i).stream, (*i).type,
                                    fn, describe, usestream, evenifexists);
             sr->setcomments(comments);
             srec.push_back(sr);
@@ -147,7 +148,7 @@ void dorec(string fn, bool date,
     if (!srec.size())
         throw Error("Record", "No working streams");
 
-    for (vector<StreamRec *>::iterator i = srec.begin(); i != srec.end(); ++i)
+    for (vector<RobotServer *>::iterator i = srec.begin(); i != srec.end(); ++i)
         try
         {
             sdbx("Starting %s", (*i)->name().c_str());
@@ -158,11 +159,11 @@ void dorec(string fn, bool date,
             e.report();
         }
 
-    for (vector<StreamRec *>::iterator i = srec.begin(); i != srec.end(); ++i)
+    for (vector<RobotServer *>::iterator i = srec.begin(); i != srec.end(); ++i)
         try
         {
             sdbx("Waiting for %s to finish", (*i)->name().c_str());
-            if ((*i)->wait() == StreamRec::SOURCE_END)
+            if ((*i)->wait() == RobotServer::SOURCE_END)
                 rerec_safe = false;
         }
         catch (Error const &e)
@@ -170,7 +171,7 @@ void dorec(string fn, bool date,
             e.report();
         }
 
-    for (vector<StreamRec *>::iterator i = srec.begin(); i != srec.end(); ++i)
+    for (vector<RobotServer *>::iterator i = srec.begin(); i != srec.end(); ++i)
         try
         {
             sdbx("Deleting %s", (*i)->name().c_str());

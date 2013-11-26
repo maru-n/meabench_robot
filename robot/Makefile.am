@@ -17,6 +17,6 @@
 
 
 bin_PROGRAMS = mea_robot
-noinst_HEADERS = Descriptions.H Recorder.H SourceSet.H SpikeRecorder.H StreamRec.H
-mea_robot_SOURCES = robot.C Recorder.C SpikeRecorder.C SourceSet.C StreamRec.C
+noinst_HEADERS = Descriptions.H Recorder.H SourceSet.H SpikeRecorder.H RobotServer.h
+mea_robot_SOURCES = robot.C Recorder.C SpikeRecorder.C SourceSet.C RobotServer.c
 include $(top_srcdir)/Makefile.base
