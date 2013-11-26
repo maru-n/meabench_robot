@@ -56,3 +56,11 @@ scope/mea_scope
 spikesrv/.libs/mea_spikedet
 spikesrv/mea_spikedet
 lt-mea_robot
+.tags
+.tags_sorted_by_file
+record/.libs/lt-mea_record
+replay/.libs/lt-mea_replay
+scope/.libs/lt-mea_scope
+spikesrv/.libs/lt-mea_spikedet
+testdata.raw
+testdata.raw.desc
