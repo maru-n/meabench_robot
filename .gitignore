@@ -14,3 +14,6 @@
 *.Po
 *.Plo
 Makefile
+record/mea_record
+rawsrv/mea_nssrv
+*/.libs
