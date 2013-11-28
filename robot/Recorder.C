@@ -34,6 +34,13 @@ Recorder::Recorder(SFCVoid *source0,
     current_file_length = 0;
     file_seq_no = 0;
     saveto = savefrom = last = source->first();
+
+
+    //####################################
+    printf("test\n");
+    server = new TCPDataServer();
+    server->setup(12345);
+    server->startListening();
 }
 
 Recorder::~Recorder()
@@ -72,11 +79,16 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
     }
     while (last < end)
     {
-
-        //printf("time:%d \n", time(0));
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
-        printf("time:%d channel:%d\n", time(0), si.channel);
+        //###########################
+        if(server->isConnected()) {
+            //printf("time:%d channel:%d\n", time(0), si.channel);
+            //server->send("test");
+            char c = (unsigned char)si.channel;
+            server->sendRawBytes(&c, 1);
+        }
+        //###########################
     }
     return oldest;
 }

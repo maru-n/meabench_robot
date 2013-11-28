@@ -24,6 +24,7 @@
 
 #include <base/Error.H>
 #include <base/SFCVoid.H>
+#include "TCPDataServer.h"
 
 class Recorder
 {
@@ -54,6 +55,12 @@ public:
     {
         last = t;
     }
+
+    bool closeSocket()
+    {
+        return server->disconnect();
+    }
+
 private:
     void newfile() throw(Error);
 protected:
@@ -61,6 +68,10 @@ protected:
     string fn;
     timeref_t last; // refers to the stream
     timeref_t savefrom, saveto; // refers to the stream
+
+    //#####################
+    DataServer *server;
+
 private:
     FILE *fh;
     timeref_t current_file_length;

@@ -231,12 +231,13 @@ void RobotServer::construct(string const &stream, string const &type,
                         sourcename.c_str());
             trig = false;
         }
-
+        /*
         if (type == SPIKETYPE)
             recorder = new SpikeRecorder(source, filename);
         else if (type == NTKTYPE) {} // db do not create a recorder (recording done in server)
         else
             recorder = new Recorder(source, filename);
+            */
         if (trig)
         {
             trigfh = fopen(trigname.c_str(), "w");
@@ -334,15 +335,6 @@ void RobotServer::exec()
             canslow = true;
     }
 
-    /////////// CONNECT TO THREADSERV HERE ? ////////////////
-    //// GET SLOT FROMN SOURCE
-    //  SpikeSFCli *tmpsrc = dynamic_cast<SpikeSFCli*>(source);
-    //fprintf(stderr,"RobotServer.C   %lli \n",source->latest()); // works
-    //fprintf(stderr,"RobotServer.C   %i \n",source->auxsize()); // works
-    //fprintf(stderr,"RobotServer.C   %i \n",slot);
-    ////*MEAB::rawout->sfsrv.aux() = *MEAB::rawin->sfcli.aux();
-
-
     if (canslow)
     {
         sleeper->report_bufuse(source->first());
@@ -368,10 +360,10 @@ void RobotServer::exec()
     fprintf(stderr, "Recording from %s into %s with%s triggering\n",
             sourcename.c_str(), filename.c_str(), trig ? "" : "out");
 
-    if (trig)
-        recorder->set_bounds(0, 0);
-    else
-        recorder->set_bounds(0, INFTY);
+
+    recorder = new SpikeRecorder(source, filename);
+    recorder->set_bounds(0, INFTY);
+
     /////  recorder->skip_to(source->first());
     recorder->skip_to(source->latest()); // db: try this to align timing to salpa and raw
 
@@ -393,48 +385,9 @@ void RobotServer::exec()
             timeref_t oldest = recorder->save_some();
             if (oldest != INFTY)
                 source->bufuse_update(oldest);
-            /*
-            if (trig)
-            {
-                SFAux const *aux = (SFAux const *)(source->aux());
-                if (aux->trig.t_latest != lasttrig)
-                {
-                    lasttrig = aux->trig.t_latest;
-                    recorder->set_bounds(lasttrig - pretrig, lasttrig + posttrig);
-                    sdbx("Writing trigger info: %i %.5f %i (%p)\n", aux->trig.n_latest,
-                         aux->trig.t_latest / (FREQKHZ * 1000.0), aux->trig.e_latest, trigfh);
-                    fprintf(trigfh, "%i %.5f %i\n", aux->trig.n_latest,
-                            aux->trig.t_latest / (FREQKHZ * 1000.0), aux->trig.e_latest);
-                    fflush(trigfh);
-                }
-            }
-            if (res == Wakeup::Stop)
-                break;
-            sdbx("canslow: %c oldest: %Li nextbufuse: %Li ival=%Li",
-                 canslow ? 'y' : 'n',
-                 oldest,
-                 nextbufuse,
-                 sleeper->getival());
-            if (canslow && oldest >= nextbufuse)
-            {
-                sleeper->report_bufuse(oldest);
-                nextbufuse = oldest + sleeper->getival() * 2;
-            }
-            */
-            //OLD/      time_t now = time(0);
-            //OLD/      if (now >= nextbufusereport_s) {
-            //OLD/        nextbufusereport_s = now + BUFUSEREPORTIVAL_S;
-            //OLD/        time_t sec = now - starttime_s;
-            //OLD/        int min = sec/60;
-            //OLD/        sec -= min*60;
-            //OLD/        int hr = min/60;
-            //OLD/        min -= hr*60;
-            //OLD/        fprintf(stderr,"[%i:%02i:%02i] Intermediate buffer use for %s: %s\n",
-            //OLD/            hr,min,int(sec),filename.c_str(),
-            //OLD/            source->bufuse_deepreport().c_str());
-            //OLD/      }
         }
     }
+    /*
     catch (Intr const &i)
     {
         // save last bit upon ^C.
@@ -442,7 +395,7 @@ void RobotServer::exec()
         if (oldest != INFTY)
             source->bufuse_update(oldest);
         throw;
-    }
+    }*/
     catch (Error const &e)
     {
         e.report();
@@ -476,6 +429,7 @@ void RobotServer::exec()
 
 
     fprintf(stderr, "Buffer usage: %s\n", source->bufuse_deepreport().c_str());
+    delete recorder;
 
     if (describe)
     {

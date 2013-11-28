@@ -21,6 +21,7 @@
 #include "SpikeRecorder.H"
 
 #include <spikesrv/Defs.H>
+#include "TCPDataServer.h"
 
 SpikeRecorder::SpikeRecorder(SFCVoid *source,
                              string const &filename) throw(Error):
@@ -28,6 +29,7 @@ SpikeRecorder::SpikeRecorder(SFCVoid *source,
 {
     raw_savefrom = raw_saveto = 0;
     savefrom = 0; saveto = INFTY; // -> do not let Recorder use these limits.
+
 }
 
 void SpikeRecorder::set_bounds(timeref_t t0, timeref_t t1) throw(Error)

@@ -95,27 +95,27 @@ std::string TCPDataServer::getClientAddress()
 
 bool TCPDataServer::send(std::string message)
 {
-    write(dstSocket, message.c_str(), message.size());
-    /*
-    numrcv = recv(dstSocket, buffer, BUFFER_SIZE, 0);
-    if (numrcv == 0 || numrcv == -1)
-    {
-        close(dstSocket); break;
+    if( !isConnected() ) {
+        std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
+        return false;
     }
-    printf("received: %s\n", buffer);
-    */
+    write(dstSocket, message.c_str(), message.size());
     return true;
 }
 
 bool TCPDataServer::sendRawMsg(const char *rawMsg, const int numBytes)
 {
-    std::cerr << "TCPDataServer::receive() :this method is not implemented." << std::endl;
-    return false;
+    return sendRawBytes(rawMsg, numBytes);
 }
+
 bool TCPDataServer::sendRawBytes(const char *rawBytes, const int numBytes)
 {
-    std::cerr << "TCPDataServer::receive() :this method is not implemented." << std::endl;
-    return false;
+    if( !isConnected() ) {
+        std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
+        return false;
+    }
+    write(dstSocket, rawBytes, numBytes);
+    return true;
 }
 
 int TCPDataServer::getNumReceivedBytes()
