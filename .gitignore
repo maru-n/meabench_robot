@@ -35,3 +35,5 @@ mea_salpa
 libtool
 gui/QGraph.moc.C
 gui/QMultiGraph.moc.C
+testdata.raw
+testdata.raw.desc
