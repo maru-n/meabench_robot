@@ -28,30 +28,33 @@
 
 #include <map>
 
-bool SourceSet::needsstream() const {
-  map<string,int> types;
-  for (const_iterator i=begin(); i!=end(); ++i) 
-    if (++types[(*i).type] > 1)
-      return true;
-  return false;
+bool SourceSet::needsstream() const
+{
+    map<string, int> types;
+    for (const_iterator i = begin(); i != end(); ++i)
+        if (++types[(*i).type] > 1)
+            return true;
+    return false;
 }
 
-void SourceSet::add(string const &stream) throw(Error) {
-  add(stream,autotype(stream));
+void SourceSet::add(string const &stream) throw(Error)
+{
+    add(stream, autotype(stream));
 }
 
-void SourceSet::reset() throw(Error) {
-//  close();
-  erase(begin(),end());
+void SourceSet::reset() throw(Error)
+{
+    //  close();
+    erase(begin(), end());
 }
 
 //SFCVoid const *SourceSet::source(string const &streamname) const throw(Error) {
 //  int n=0;
-//  for (const_iterator i=begin(); i!=end(); ++i) 
+//  for (const_iterator i=begin(); i!=end(); ++i)
 //    if ((*i).stream == streamname)
-//	return source(n);
+//  return source(n);
 //    else
-//	n++;
+//  n++;
 //  throw Error("SourceSet",string("Unknown source: ") + streamname);
 //}
 
@@ -64,41 +67,41 @@ void SourceSet::reset() throw(Error) {
 //  for (const_iterator i=begin(); i!=end(); ++i) {
 //    string fn = basefn;
 //    if (usestream) {
-//	fn += "."; fn+= (*i).stream;
+//  fn += "."; fn+= (*i).stream;
 //    }
 //    fn += "."; fn+= (*i).type;
 //    fnames.push_back(fn);
 //    sdbx("file=%s",fn.c_str());
 //    SFCVoid *src=0;
 //    try {
-//	string fn = string(COMMONPATH) + (*i).stream + SFSUFFIX;
-//	if ((*i).type == SPIKETYPE)
-//	  src = new SpikeSFCli(fn.c_str());
-//	else if ((*i).type == RAWTYPE)
-//	  src = new RawSFCli(fn.c_str());
-//	else
-//	  src = new SFCVoid(fn.c_str());
-//	srcs.push_back(src);
+//  string fn = string(COMMONPATH) + (*i).stream + SFSUFFIX;
+//  if ((*i).type == SPIKETYPE)
+//    src = new SpikeSFCli(fn.c_str());
+//  else if ((*i).type == RAWTYPE)
+//    src = new RawSFCli(fn.c_str());
+//  else
+//    src = new SFCVoid(fn.c_str());
+//  srcs.push_back(src);
 //    } catch (Error const &e) {
-//	throw Error("SourceSet",Sprintf("Cannot open source `%s': %s",
-//					(*i).stream.c_str(),e.msg().c_str()));
+//  throw Error("SourceSet",Sprintf("Cannot open source `%s': %s",
+//                  (*i).stream.c_str(),e.msg().c_str()));
 //    }
 //    if ((*i).type == SPIKETYPE) {
-//	recs.push_back(new SpikeRecorder(src,basefn,
-//					 (*i).type, (*i).stream,
-//					 usestream));
+//  recs.push_back(new SpikeRecorder(src,basefn,
+//                   (*i).type, (*i).stream,
+//                   usestream));
 //    } else {
-//	if ((*i).type != "raw") 
-//	  fprintf(stderr,"Warning: Unknown stream type %s - treating as raw\n",
-//		  (*i).type.c_str());
-//	try {
-//	  recs.push_back(new Recorder(src,basefn,
-//				      (*i).type, (*i).stream,
-//				      usestream));
-//	} catch (Error const &e) {
-//	  throw Error("SourceSet",Sprintf("Cannot open output for `%s': %s",
-//					  (*i).stream.c_str(),e.msg().c_str()));
-//	}
+//  if ((*i).type != "raw")
+//    fprintf(stderr,"Warning: Unknown stream type %s - treating as raw\n",
+//        (*i).type.c_str());
+//  try {
+//    recs.push_back(new Recorder(src,basefn,
+//                    (*i).type, (*i).stream,
+//                    usestream));
+//  } catch (Error const &e) {
+//    throw Error("SourceSet",Sprintf("Cannot open output for `%s': %s",
+//                    (*i).stream.c_str(),e.msg().c_str()));
+//  }
 //    }
 //  }
 //  opened = true;
@@ -129,8 +132,8 @@ void SourceSet::reset() throw(Error) {
 //}
 //
 //void SourceSet::bufuse_report() {
-//  if (opened) 
-//    for (int i=0; i<size(); i++) 
-//	fprintf(stderr,"Buffer use percentages for %s: %s\n",
-//		(*this)[i].stream.c_str(), srcs[i]->bufuse_deepreport().c_str());
+//  if (opened)
+//    for (int i=0; i<size(); i++)
+//  fprintf(stderr,"Buffer use percentages for %s: %s\n",
+//      (*this)[i].stream.c_str(), srcs[i]->bufuse_deepreport().c_str());
 //}
