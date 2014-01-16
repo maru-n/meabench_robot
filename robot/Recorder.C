@@ -49,10 +49,10 @@ Recorder::Recorder(SFCVoid *source0,
     stimulusServer->setup(STIMULUS_SERVER_PORT);
     stimulusServer->startListening();
     */
-    /*
+
     stimSrv = new StimSrv();
     stimSrv->setup();
-    */
+    receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
 }
 
 Recorder::~Recorder()
@@ -100,8 +100,16 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
 
-            string data = dataServer->receive();
-            std::cout << data << std::endl;
+            int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
+            for(int i=0; i<receivedSize; i+=2) {
+                int dacNum = (int)receivedDataBuffer[0];
+                int channelNum = (int)receivedDataBuffer[1];
+                std::cout << "DAC#" << dacNum << " Channel#" << channelNum << std::endl;
+                if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
+                    break;
+                }
+                stimSrv->sendStim(dacNum, channelNum);
+            }
         }
         //###########################
     }

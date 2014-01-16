@@ -86,6 +86,7 @@ protected:
     TCPDataServer *stimulusServer;
     */
     StimSrv *stimSrv;
+    unsigned char* receivedDataBuffer;
 
 private:
     FILE *fh;

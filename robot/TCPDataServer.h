@@ -50,6 +50,7 @@ private:
 
     pthread_t thread;
     pthread_attr_t attr;
+
     /*
     int numrcv;
     char buffer[BUFFER_SIZE];
