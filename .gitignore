@@ -37,3 +37,17 @@ gui/QGraph.moc.C
 gui/QMultiGraph.moc.C
 testdata.raw
 testdata.raw.desc
+autom4te.cache/output.0
+autom4te.cache/output.1
+autom4te.cache/traces.0
+autom4te.cache/traces.1
+robot/Makefile.in
+robot/autom4te.cache/output.0
+robot/autom4te.cache/output.1
+robot/autom4te.cache/traces.0
+robot/autom4te.cache/traces.1
+.tags
+.tags_sorted_by_file
+robot/filename.spike
+robot/filename.spike.desc
+robot/test_TCPDataServer
