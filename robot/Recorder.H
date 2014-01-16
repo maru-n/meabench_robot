@@ -63,7 +63,12 @@ public:
 
     bool closeSocket()
     {
-        return motorServer->disconnect();
+        dataServer->disconnect();
+        /*
+        motorServer->disconnect();
+        stimulusServer->disconnect();
+        */
+        return true;
     }
 
 private:
@@ -75,9 +80,12 @@ protected:
     timeref_t savefrom, saveto; // refers to the stream
 
     //#####################
-    DataServer *motorServer;
-    DataServer *stimulusServer;
-    StimSrv stimSrv;
+    TCPDataServer *dataServer;
+    /*
+    TCPDataServer *motorServer;
+    TCPDataServer *stimulusServer;
+    */
+    StimSrv *stimSrv;
 
 private:
     FILE *fh;

@@ -12,6 +12,7 @@
 #include "DataServer.h"
 
 #define BUFFER_SIZE 256
+#define TCP_MAX_MSG_SIZE 512
 
 class TCPDataServer: public DataServer
 {
