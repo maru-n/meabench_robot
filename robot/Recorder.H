@@ -25,6 +25,7 @@
 #include <base/Error.H>
 #include <base/SFCVoid.H>
 #include "TCPDataServer.h"
+#include "StimSrv.h"
 
 #define MOTOR_SERVER_PORT 32130
 #define STIMULUS_SERVER_PORT 32131
@@ -62,7 +63,7 @@ public:
 
     bool closeSocket()
     {
-        return server->disconnect();
+        return motorServer->disconnect();
     }
 
 private:
@@ -74,7 +75,7 @@ protected:
     timeref_t savefrom, saveto; // refers to the stream
 
     //#####################
-    DataServer *moterServer;
+    DataServer *motorServer;
     DataServer *stimulusServer;
     StimSrv stimSrv;
 

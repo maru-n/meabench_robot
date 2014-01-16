@@ -205,7 +205,7 @@ void run(int argc, char **args)
     dorec("filename", false);
 }
 
-void test_stimulus()
+void test_stimulus(int argc, char **args)
 {
     printf("Stimulus test for DAC#0, Channel#3");
     StimSrv stimSrv;
@@ -220,7 +220,7 @@ struct Cmdr::Cmap cmds[] =
 {
     { Cmdr::quit, "quit", 0, 0, "", },
     { run, "run", 0, 0, "", },
-    { teststim, "test_stimulus", 0, 0, "", },
+    { test_stimulus, "teststim", 0, 0, "", },
     { rec_source, "source", 0, 200, "[name[/type] ...]", },
     { cd, "cd", 0, 1, "[directory]", },
     { ls, "ls", 0, 100, "[ls args]", },
