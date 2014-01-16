@@ -25,6 +25,7 @@
 //#include "StreamRec.H"
 #include "RobotServer.H"
 #include "SourceSet.H"
+#include "StimSrv.h"
 
 #include <string>
 #include <unistd.h>
@@ -204,6 +205,14 @@ void run(int argc, char **args)
     dorec("filename", false);
 }
 
+void test_stimulus()
+{
+    printf("Stimulus test for DAC#0, Channel#3");
+    StimSrv stimSrv;
+    stimSrv.setup();
+    stimSrv.sendStim(0,3);
+}
+
 #if CMDGUI
 // instead the main_function() in the CmdGui software, mearaw.cpp, is used
 #else
@@ -211,6 +220,7 @@ struct Cmdr::Cmap cmds[] =
 {
     { Cmdr::quit, "quit", 0, 0, "", },
     { run, "run", 0, 0, "", },
+    { teststim, "test_stimulus", 0, 0, "", },
     { rec_source, "source", 0, 200, "[name[/type] ...]", },
     { cd, "cd", 0, 1, "[directory]", },
     { ls, "ls", 0, 100, "[ls args]", },

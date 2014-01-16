@@ -70,7 +70,10 @@ protected:
     timeref_t savefrom, saveto; // refers to the stream
 
     //#####################
-    DataServer *server;
+    static const MOTOR_SERVER_PORT = 32130
+    static const STIMULUS_SERVER_PORT = 32131
+    DataServer *moterServer;
+    DataServer *stimulusServer;
 
 private:
     FILE *fh;

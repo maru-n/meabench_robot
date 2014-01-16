@@ -32,23 +32,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-# Makefile.base: part of meabench, an MEA recording and analysis tool
-# Copyright (C) 2000-2002  Daniel Wagenaar (wagenaar@caltech.edu)
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
@@ -70,9 +53,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = mea_robot$(EXEEXT)
-DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(top_srcdir)/Makefile.base
 subdir = robot
+DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -84,10 +67,10 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_mea_robot_OBJECTS = robot.$(OBJEXT) Recorder.$(OBJEXT) \
 	SpikeRecorder.$(OBJEXT) SourceSet.$(OBJEXT) \
-	RobotServer.$(OBJEXT) TCPDataServer.$(OBJEXT)
+	RobotServer.$(OBJEXT) TCPDataServer.$(OBJEXT) \
+	StimSrv.$(OBJEXT)
 mea_robot_OBJECTS = $(am_mea_robot_OBJECTS)
 mea_robot_LDADD = $(LDADD)
-mea_robot_DEPENDENCIES = $(top_srcdir)/base/libmea.la
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -229,15 +212,16 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_HEADERS = Descriptions.H Recorder.H SourceSet.H SpikeRecorder.H RobotServer.H DataServer.h TCPDataServer.h
-mea_robot_SOURCES = robot.C Recorder.C SpikeRecorder.C SourceSet.C RobotServer.C TCPDataServer.cpp
-INCLUDES = -I$(top_srcdir)
-LDADD = $(top_srcdir)/base/libmea.la
+noinst_HEADERS = Descriptions.H Recorder.H SourceSet.H SpikeRecorder.H RobotServer.H DataServer.h TCPDataServer.h StimSrv.h
+mea_robot_SOURCES = robot.C Recorder.C SpikeRecorder.C SourceSet.C RobotServer.C TCPDataServer.cpp StimSrv.cpp
+
+#include $(top_srcdir)/Makefile.base
+INCLUDES = -I$(top_srcdir)/../
 all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .C .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/Makefile.base $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -324,6 +308,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RobotServer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SourceSet.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SpikeRecorder.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StimSrv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TCPDataServer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robot.Po@am__quote@
 
@@ -575,6 +560,7 @@ uninstall-am: uninstall-binPROGRAMS
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
+#LDADD=$(top_srcdir)/../base/libmea.la
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

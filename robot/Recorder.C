@@ -37,10 +37,14 @@ Recorder::Recorder(SFCVoid *source0,
 
 
     //####################################
-    printf("test\n");
-    server = new TCPDataServer();
-    server->setup(12345);
-    server->startListening();
+    motorServer = new TCPDataServer();
+    motorServer->setup(MOTOR_SERVER_PORT);
+    motorServer->startListening();
+
+    stimulusServer = new TCPDataServer();
+    stimulusServer->setup(STIMULUS_SERVER_PORT);
+    stimulusServer->startListening();
+
 }
 
 Recorder::~Recorder()
