@@ -20,7 +20,7 @@ bin_PROGRAMS = mea_robot
 noinst_HEADERS = Descriptions.H Recorder.H SourceSet.H SpikeRecorder.H RobotServer.H DataServer.h TCPDataServer.h StimSrv.h
 mea_robot_SOURCES = robot.C Recorder.C SpikeRecorder.C SourceSet.C RobotServer.C TCPDataServer.cpp StimSrv.cpp
 
-#include $(top_srcdir)/Makefile.base
+include $(top_srcdir)/Makefile.base
 
-INCLUDES=-I$(top_srcdir)/../
+#INCLUDES=-I$(top_srcdir)/../
 #LDADD=$(top_srcdir)/../base/libmea.la

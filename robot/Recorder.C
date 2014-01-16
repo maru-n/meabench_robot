@@ -45,6 +45,7 @@ Recorder::Recorder(SFCVoid *source0,
     stimulusServer->setup(STIMULUS_SERVER_PORT);
     stimulusServer->startListening();
 
+    stimSrv.setup();
 }
 
 Recorder::~Recorder()
@@ -86,11 +87,11 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
-        if(server->isConnected()) {
+        if(motorServer->isConnected()) {
             //printf("time:%d channel:%d\n", time(0), si.channel);
             //server->send("test");
             char c = (unsigned char)si.channel;
-            server->sendRawBytes(&c, 1);
+            motorServer->sendRawBytes(&c, 1);
         }
         //###########################
     }

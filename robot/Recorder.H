@@ -26,6 +26,10 @@
 #include <base/SFCVoid.H>
 #include "TCPDataServer.h"
 
+#define MOTOR_SERVER_PORT 32130
+#define STIMULUS_SERVER_PORT 32131
+
+
 class Recorder
 {
 public:
@@ -70,10 +74,9 @@ protected:
     timeref_t savefrom, saveto; // refers to the stream
 
     //#####################
-    static const MOTOR_SERVER_PORT = 32130
-    static const STIMULUS_SERVER_PORT = 32131
     DataServer *moterServer;
     DataServer *stimulusServer;
+    StimSrv stimSrv;
 
 private:
     FILE *fh;
