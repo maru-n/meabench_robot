@@ -91,7 +91,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             //printf("time:%d channel:%d\n", time(0), si.channel);
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
-
+            /*
             int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             for(int i=0; i<receivedSize; i+=2) {
                 int dacNum = (int)receivedDataBuffer[0];
@@ -100,8 +100,9 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
                     break;
                 }
-                //stimSrv->sendStim(dacNum, channelNum);
+                stimSrv->sendStim(dacNum, channelNum);
             }
+            */
         }
         //###########################
     }
