@@ -48,6 +48,9 @@ timeref_t SpikeRecorder::save_some(timeref_t upto) throw(Error)
         throw Error("SpikeRecorder", "Not a spike source");
     sdbx("SR:ss saveto=%Li upto=%Li latest=%Li context=%Li 478=%i",
          saveto, upto, src->latest(), src->aux()->lastcontextified, 478);
+    printf("SR:ss saveto=%Li upto=%Li latest=%Li context=%Li 478=%i\n",
+       saveto, upto, src->latest(), src->aux()->lastcontextified, 478);
+
     timeref_t end = min(min(saveto, upto), min(src->latest(), src->aux()->lastcontextified));
     while (last < end && (*src)[last].time < raw_savefrom)
         last++;

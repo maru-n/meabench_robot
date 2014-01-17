@@ -71,7 +71,6 @@ void Recorder::newfile() throw(Error)
 
 timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 {
-    printf("savesome\n");
     if (last < savefrom)
         last = savefrom;
     timeref_t end = min(min(saveto, upto), source->latest());
