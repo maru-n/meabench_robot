@@ -89,6 +89,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         //###########################
         if(dataServer->isConnected()) {
             printf("time:%d channel:%d\n", time(0), si.channel);
+
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
             /*
