@@ -38,7 +38,7 @@ Recorder::Recorder(SFCVoid *source0,
 
     //####################################
     dataServer = new TCPDataServer();
-    dataServer->setup(MOTOR_SERVER_PORT);
+    dataServer->setup(TCP_SERVER_PORT);
     dataServer->startListening();
     /*
     stimSrv = new StimSrv();
@@ -88,7 +88,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
         if(dataServer->isConnected()) {
-            //printf("time:%d channel:%d\n", time(0), si.channel);
+            printf("time:%d channel:%d\n", time(0), si.channel);
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
             /*

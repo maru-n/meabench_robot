@@ -27,9 +27,11 @@
 #include "TCPDataServer.h"
 #include "StimSrv.h"
 
+#define TCP_SERVER_PORT 32130
+/*
 #define MOTOR_SERVER_PORT 32130
 #define STIMULUS_SERVER_PORT 32131
-
+*/
 
 class Recorder
 {
