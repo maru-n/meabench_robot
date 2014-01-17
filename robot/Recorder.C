@@ -87,8 +87,8 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
+        printf("time:%d channel:%d\n", time(0), si.channel);
         if(dataServer->isConnected()) {
-            printf("time:%d channel:%d\n", time(0), si.channel);
 
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);

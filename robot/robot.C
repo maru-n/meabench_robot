@@ -47,34 +47,6 @@ int ntk_sock = 0;   // db Filedescriptor used for starting/stopping record of nt
 int ntk_rec  = 0;  // db State of ntk recording
 int slot;           // db use for threaded server, slot to record ntk commands
 
-/*
-void enabledesc(int argc=0, char **args=0) {
-  if (argc) {
-    int n = atoi(args[0]);
-    if (n==0)
-      describe=false;
-    else if (n==1)
-      describe=true;
-    else
-      throw Error("describe","Argument must be 0 or 1 to disable or enable description file");
-  }
-  fprintf(stderr,"Description file generation is %sabled",describe?"en":"dis");
-}
-
-void setlimit(int argc=0, char **args=0) {
-  if (argc) {
-    if (strcmp(args[0],"-")==0)
-      limit_s = 0;
-    else
-      limit_s = atoi(args[0]);
-  }
-  if (limit_s)
-    fprintf(stderr,"Recording time limit: %i s\n",limit_s);
-  else
-    fprintf(stderr,"No predetermined time limit\n");
-}
-
-*/
 void rec_source(int argc = 0, char **args = 0)
 {
     if (argc)
