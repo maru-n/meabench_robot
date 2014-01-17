@@ -41,18 +41,11 @@ Recorder::Recorder(SFCVoid *source0,
     dataServer->setup(MOTOR_SERVER_PORT);
     dataServer->startListening();
     /*
-    motorServer = new TCPDataServer();
-    motorServer->setup(MOTOR_SERVER_PORT);
-    motorServer->startListening();
-
-    stimulusServer = new TCPDataServer();
-    stimulusServer->setup(STIMULUS_SERVER_PORT);
-    stimulusServer->startListening();
-    */
-
     stimSrv = new StimSrv();
     stimSrv->setup();
+    */
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
+    //####################################
 }
 
 Recorder::~Recorder()
@@ -96,7 +89,6 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         //###########################
         if(dataServer->isConnected()) {
             //printf("time:%d channel:%d\n", time(0), si.channel);
-            //server->send("test");
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
 
@@ -108,7 +100,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
                     break;
                 }
-                stimSrv->sendStim(dacNum, channelNum);
+                //stimSrv->sendStim(dacNum, channelNum);
             }
         }
         //###########################
