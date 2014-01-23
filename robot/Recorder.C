@@ -82,15 +82,16 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         if (current_file_length > LONGESTFILE)
             newfile();
     }
+
     while (last < end)
     {
+        printf("last:%Li end:%Li\n",last, end);
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
-        printf("time:%d channel:%d\n", time(0), si.channel);
+        char c = (unsigned char)si.channel;
+        printf("time:%d channel:%d\n", time(0), c);
         if(dataServer->isConnected()) {
-
-            char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
             /*
             int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
@@ -101,10 +102,11 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
                     break;
                 }
-                stimSrv->sendStim(dacNum, channelNum);
+                //stimSrv->sendStim(dacNum, channelNum);
             }
             */
         }
+        printf("last:%Li end:%Li\n",last, end);
         //###########################
     }
     return oldest;
