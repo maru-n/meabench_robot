@@ -93,7 +93,6 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         printf("time:%d channel:%d\n", time(0), c);
         if(dataServer->isConnected()) {
             dataServer->sendRawBytes(&c, 1);
-            /*
             int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             for(int i=0; i<receivedSize; i+=2) {
                 int dacNum = (int)receivedDataBuffer[0];
@@ -104,7 +103,6 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 }
                 //stimSrv->sendStim(dacNum, channelNum);
             }
-            */
         }
         printf("last:%Li end:%Li\n",last, end);
         //###########################
