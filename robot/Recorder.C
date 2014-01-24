@@ -86,6 +86,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
     while (last < end)
     {
+        printf("test\n");
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
