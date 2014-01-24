@@ -89,6 +89,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         //printf("test\n");
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
+
         //###########################
         //if(tcpServer->isConnected()) {
         if(true) {

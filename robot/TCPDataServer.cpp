@@ -127,6 +127,7 @@ int TCPDataServer::getNumReceivedBytes()
 
 std::string TCPDataServer::receive()
 {
+    /*
     char tmpBuff[TCP_MAX_MSG_SIZE+1];
     int messageSize = receiveRawBytes(tmpBuff, TCP_MAX_MSG_SIZE);
     std::string ret;
@@ -139,6 +140,8 @@ std::string TCPDataServer::receive()
     }
 
     return ret;
+    */
+    return -1;
 }
 
 int TCPDataServer::receiveRawMsg(char *receiveBytes,  int numBytes)
@@ -149,6 +152,7 @@ int TCPDataServer::receiveRawMsg(char *receiveBytes,  int numBytes)
 
 int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
 {
+    /*
     if( !isConnected() ) {
         std::cerr << "TCPDataServer::receiveRawBytes() :This Server is not connected." << std::endl;
         return -1;
@@ -157,16 +161,6 @@ int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
         std::cerr << "TCPDataServer::receiveRawBytes() :invalid socket error." << std::endl;
         return(-1);
     }
-    /*
-    fd_set fd;
-    FD_ZERO(&fd);
-    FD_SET(srcSocket, &fd);
-    timeval tv= {m_dwTimeoutSend, 0};
-    if(select(srcSocket+1,&fd,NULL,NULL,&tv)== 0)
-    {
-        return(SOCKET_TIMEOUT);
-    }
-    */
     int ret = recv(dstSocket, receiveBytes, numBytes, 0);
 
     if(ret==-1) {
@@ -174,6 +168,8 @@ int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
         return -1;
     }
     return ret;
+    */
+    return -1;
 }
 
 void *TCPDataServer::listening_thread_code(void *arg)
