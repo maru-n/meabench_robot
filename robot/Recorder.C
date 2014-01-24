@@ -37,9 +37,9 @@ Recorder::Recorder(SFCVoid *source0,
 
 
     //####################################
-    dataServer = new TCPDataServer();
-    dataServer->setup(TCP_SERVER_PORT);
-    dataServer->startListening();
+    tcpServer = new TCPDataServer();
+    tcpServer->setup(TCP_SERVER_PORT);
+    tcpServer->startListening();
     /*
     stimSrv = new StimSrv();
     stimSrv->setup();
@@ -90,12 +90,12 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
-        if(dataServer->isConnected()) {
+        if(tcpServer->isConnected()) {
             printf("connected and send data\n");
             char c = (unsigned char)si.channel;
-            dataServer->sendRawBytes(&c, 1);
+            tcpServer->sendRawBytes(&c, 1);
             /*
-            int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
+            int receivedSize = tcpServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             for(int i=0; i<receivedSize; i+=2) {
                 int dacNum = (int)receivedDataBuffer[0];
                 int channelNum = (int)receivedDataBuffer[1];

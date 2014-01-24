@@ -81,7 +81,7 @@ protected:
     timeref_t savefrom, saveto; // refers to the stream
 
     //#####################
-    TCPDataServer *dataServer;
+    TCPDataServer *tcpServer;
     /*
     TCPDataServer *motorServer;
     TCPDataServer *stimulusServer;
