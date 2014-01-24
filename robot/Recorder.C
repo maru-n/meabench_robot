@@ -89,6 +89,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
         if(dataServer->isConnected()) {
+            printf("connected and send data\n");
             char c = (unsigned char)si.channel;
             dataServer->sendRawBytes(&c, 1);
             int receivedSize = dataServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
