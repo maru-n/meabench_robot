@@ -13,7 +13,7 @@ public:
     virtual bool isSetuped()
     {
         return setuped;
-    };
+    }
     virtual bool isConnected()
     {
         return connected;

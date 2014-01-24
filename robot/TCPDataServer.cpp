@@ -76,6 +76,7 @@ bool TCPDataServer::disconnect()
         return false;
     }
     connected = false;
+    std::cout << "TCPDataSever::disconnect(): socket is disconnected." << std::endl;
     return true;
 }
 
