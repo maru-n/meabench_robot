@@ -50,7 +50,7 @@ void Recorder::newfile() throw(Error) {
   if (!fh)
     throw SysErr("Recorder","Cannot create continuation file");
   current_file_length = 0;
-}  
+}
 
 timeref_t Recorder::save_some(timeref_t upto) throw(Error) {
   if (last<savefrom)
@@ -64,6 +64,10 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error) {
       newfile();
   }
   while (last<end) {
+    SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
+    Spikeinfo const &si = (*spikeSrc)[last++];
+    char c = (unsigned char)si.channel;
+
     int res = fwrite((*source)[last++], tpsiz, 1, fh);
     if (res!=1) {
       if (res<0)
