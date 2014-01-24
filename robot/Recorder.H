@@ -65,12 +65,11 @@ public:
 
     bool closeSocket()
     {
-        dataServer->disconnect();
+        return dataServer->disconnect();
         /*
-        motorServer->disconnect();
-        stimulusServer->disconnect();
-        */
+        dataServer->disconnect();
         return true;
+        */
     }
 
 private:
