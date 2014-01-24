@@ -183,8 +183,9 @@ void *TCPDataServer::listening_thread_code(void *arg)
     std::cout << "Waiting for connection ..." << std::endl;
     int dstAddrSize = sizeof(me->dstAddr);
     me->dstSocket = accept(me->srcSocket, (struct sockaddr *) &me->dstAddr, (socklen_t *)&dstAddrSize);
-    std::cout << "Connected from " << me->getClientAddress() << ":" << me->getPort() << std::endl;
     me->connected = true;
+    std::cout << "Connected from " << me->getClientAddress() << ":" << me->getPort() << std::endl;
     pthread_exit(0);
+    //std::cout << "Connected from " << me->getClientAddress() << ":" << me->getPort() << std::endl;
     return 0;
 }

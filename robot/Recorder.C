@@ -90,10 +90,12 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
         //###########################
-        if(tcpServer->isConnected()) {
-            printf("connected and send data\n");
+        //if(tcpServer->isConnected()) {
+        if(true) {
+            //printf("connected and send data\n");
             char c = (unsigned char)si.channel;
-            tcpServer->sendRawBytes(&c, 1);
+            //tcpServer->sendRawBytes(&c, 1);
+            std::cout << (int)c << std::endl;
             /*
             int receivedSize = tcpServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             for(int i=0; i<receivedSize; i+=2) {
