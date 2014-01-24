@@ -40,10 +40,10 @@ Recorder::Recorder(SFCVoid *source0,
     dataServer = new TCPDataServer();
     dataServer->setup(TCP_SERVER_PORT);
     dataServer->startListening();
-    /*
+
     stimSrv = new StimSrv();
     stimSrv->setup();
-    */
+
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
     //####################################
 }
