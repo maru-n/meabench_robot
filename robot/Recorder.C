@@ -97,14 +97,14 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             for(int i=0; i<receivedSize; i+=2) {
                 int dacNum = (int)receivedDataBuffer[0];
                 int channelNum = (int)receivedDataBuffer[1];
-                std::cout << "DAC#" << dacNum << " Channel#" << channelNum << std::endl;
+                //std::cout << "DAC#" << dacNum << " Channel#" << channelNum << std::endl;
                 if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
                     break;
                 }
                 stimSrv->sendStim(dacNum, channelNum);
             }
         }
-        printf("last:%Li end:%Li\n",last, end);
+        //printf("last:%Li end:%Li\n",last, end);
         //###########################
     }
     return oldest;
