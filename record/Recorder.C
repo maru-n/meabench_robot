@@ -22,6 +22,7 @@
 
 #include <common/Types.H>
 #include <common/Config.H>
+#include <spikesrv/Defs.H>
 
 Recorder::Recorder(SFCVoid *source0,
 		   string const &fn0) throw(Error): fn(fn0) {
