@@ -65,7 +65,7 @@ public:
 
     bool closeSocket()
     {
-        return dataServer->disconnect();
+        return tcpServer->disconnect();
         /*
         dataServer->disconnect();
         return true;
