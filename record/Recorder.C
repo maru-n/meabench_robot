@@ -67,6 +67,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error) {
     SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
     Spikeinfo const &si = (*spikeSrc)[last++];
     char c = (unsigned char)si.channel;
+    std::cout << (int)c << std::endl;
 
     int res = fwrite((*source)[last++], tpsiz, 1, fh);
     if (res!=1) {
