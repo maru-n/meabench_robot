@@ -21,44 +21,36 @@
 #include "SpikeRecorder.H"
 
 #include <spikesrv/Defs.H>
-#include "TCPDataServer.h"
 
 SpikeRecorder::SpikeRecorder(SFCVoid *source,
-                             string const &filename) throw(Error):
-    Recorder(source, filename)
-{
-    raw_savefrom = raw_saveto = 0;
-    savefrom = 0; saveto = INFTY; // -> do not let Recorder use these limits.
-
+			     string const &filename) throw(Error):
+  Recorder(source, filename) {
+  raw_savefrom = raw_saveto = 0;
+  savefrom=0; saveto=INFTY; // -> do not let Recorder use these limits.
 }
 
-void SpikeRecorder::set_bounds(timeref_t t0, timeref_t t1) throw(Error)
-{
-    /* SpikeRecorder doesn't use Recorder's set_bounds mechanism. Rather,
-       it advances the "last" timestamp by itself (see save_some() below). */
-    sdbx("SpikeRecorder::set_bounds %g - %g", t0 / (FREQKHZ * 1000.0), t1 / (FREQKHZ * 1000.0));
-    raw_savefrom = t0;
-    raw_saveto = t1;
+void SpikeRecorder::set_bounds(timeref_t t0, timeref_t t1) throw(Error) {
+  /* SpikeRecorder doesn't use Recorder's set_bounds mechanism. Rather,
+     it advances the "last" timestamp by itself (see save_some() below). */
+  sdbx("SpikeRecorder::set_bounds %g - %g",t0/(FREQKHZ*1000.0),t1/(FREQKHZ*1000.0));
+  raw_savefrom = t0;
+  raw_saveto = t1;
 }
 
-timeref_t SpikeRecorder::save_some(timeref_t upto) throw(Error)
-{
-    SpikeSFCli *src = dynamic_cast<SpikeSFCli *>(source);
-    if (!src)
-        throw Error("SpikeRecorder", "Not a spike source");
-    sdbx("SR:ss saveto=%Li upto=%Li latest=%Li context=%Li 478=%i",
-         saveto, upto, src->latest(), src->aux()->lastcontextified, 478);
-    //printf("SR:ss saveto=%Li upto=%Li latest=%Li context=%Li 478=%i\n",
-       //saveto, upto, src->latest(), src->aux()->lastcontextified, 478);
-
-    timeref_t end = min(min(saveto, upto), min(src->latest(), src->aux()->lastcontextified));
-    while (last < end && (*src)[last].time < raw_savefrom)
-        last++;
-    timeref_t next = last;
-    while (next < end && (*src)[next].time < raw_saveto)
-        next++;
-    //  sdbx("SR:ss last=%Li next=%Li t0=%Li t1=%Li sf=%Li st=%Li upto=%Li srcl=%Li",
-    //   last, next, (*src)[last].time, (*src)[next-1].time,
-    //   raw_savefrom, raw_saveto, upto, source->latest());
-    return Recorder::save_some(next);
+timeref_t SpikeRecorder::save_some(timeref_t upto) throw(Error) {
+  SpikeSFCli *src = dynamic_cast<SpikeSFCli*>(source);
+  if (!src)
+    throw Error("SpikeRecorder","Not a spike source");
+  sdbx("SR:ss saveto=%Li upto=%Li latest=%Li context=%Li 478=%i",
+       saveto, upto, src->latest(), src->aux()->lastcontextified, 478);
+  timeref_t end = min(min(saveto, upto),min(src->latest(),src->aux()->lastcontextified));
+  while (last<end && (*src)[last].time < raw_savefrom)
+    last++;
+  timeref_t next = last;
+  while (next<end && (*src)[next].time < raw_saveto)
+    next++;
+//  sdbx("SR:ss last=%Li next=%Li t0=%Li t1=%Li sf=%Li st=%Li upto=%Li srcl=%Li",
+//	 last, next, (*src)[last].time, (*src)[next-1].time,
+//	 raw_savefrom, raw_saveto, upto, source->latest());
+  return Recorder::save_some(next);
 }
