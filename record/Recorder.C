@@ -59,24 +59,26 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error) {
   timeref_t end = min(min(saveto, upto), source->latest());
   unsigned int tpsiz = source->datasize();
   timeref_t oldest = min(last,end);
+  /*
   if (end>last) {
     current_file_length += (end-last)*tpsiz;
     if (current_file_length > LONGESTFILE)
       newfile();
-  }
+  }*/
   while (last<end) {
     SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
     Spikeinfo const &si = (*spikeSrc)[last++];
     char c = (unsigned char)si.channel;
     printf("%d\n",(int)c);
-
+    fflush(stdout)
+    /*
     int res = fwrite((*source)[last++], tpsiz, 1, fh);
     if (res!=1) {
       if (res<0)
 	throw SysErr("Recorder","Write error");
       else
 	throw Error("Recorder","Write error");
-    }
+    }*/
   }
   return oldest;
 }

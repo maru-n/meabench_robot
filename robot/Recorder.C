@@ -77,12 +77,13 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
     timeref_t end = min(min(saveto, upto), source->latest());
     unsigned int tpsiz = source->datasize();
     timeref_t oldest = min(last, end);
+    /*
     if (end > last)
     {
         current_file_length += (end - last) * tpsiz;
         if (current_file_length > LONGESTFILE)
             newfile();
-    }
+    }*/
 
     while (last < end)
     {
