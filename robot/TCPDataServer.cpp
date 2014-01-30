@@ -127,7 +127,6 @@ int TCPDataServer::getNumReceivedBytes()
 
 std::string TCPDataServer::receive()
 {
-    /*
     char tmpBuff[TCP_MAX_MSG_SIZE+1];
     int messageSize = receiveRawBytes(tmpBuff, TCP_MAX_MSG_SIZE);
     std::string ret;
@@ -140,8 +139,6 @@ std::string TCPDataServer::receive()
     }
 
     return ret;
-    */
-    return -1;
 }
 
 int TCPDataServer::receiveRawMsg(char *receiveBytes,  int numBytes)
