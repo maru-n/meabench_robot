@@ -70,7 +70,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error) {
     Spikeinfo const &si = (*spikeSrc)[last++];
     char c = (unsigned char)si.channel;
     printf("%d\n",(int)c);
-    fflush(stdout)
+    fflush(stdout);
     /*
     int res = fwrite((*source)[last++], tpsiz, 1, fh);
     if (res!=1) {
