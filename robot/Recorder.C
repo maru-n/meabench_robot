@@ -90,7 +90,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         Spikeinfo const &si = (*spikeSrc)[last++];
         char c = (unsigned char)si.channel;
         std::cout << (int)c << std::endl;
-
+        /*
         int res = fwrite((*source)[last++], tpsiz, 1, fh);
         if (res != 1)
         {
@@ -98,7 +98,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 throw SysErr("Recorder", "Write error");
             else
                 throw Error("Recorder", "Write error");
-        }
+        }*/
     }
     /*
     while (last < end)
