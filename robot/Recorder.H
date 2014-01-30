@@ -28,34 +28,44 @@
 
 #define TCP_SERVER_PORT 32130
 
-class Recorder {
+class Recorder
+{
 public:
-  static const timeref_t LONGESTFILE = 1024*1024*1024;
-  /* If a write operation would make a file longer than LONGESTFILE,
-     the file is closed, and a new one is opened with numerical extension.
-  */
+    static const timeref_t LONGESTFILE = 1024 * 1024 * 1024;
+    /* If a write operation would make a file longer than LONGESTFILE,
+       the file is closed, and a new one is opened with numerical extension.
+    */
 public:
-  Recorder(SFCVoid *source, string const &filename) throw(Error);
-  virtual ~Recorder();
-  string const &filename() const { return fn; }
-  virtual void set_bounds(timeref_t t0, timeref_t t1) throw(Error);
-  /*:A t0, t1 refer to the stream's aux.trig, that is, they are relative
-       to the raw stream's start.
-  */
-  virtual timeref_t save_some(timeref_t upto=INFTY) throw(Error);
-  //:A upto refers to the stream itself
-  //:R oldest buffer contents written
-  timeref_t latest() const { return last; }
-  void skip_to(timeref_t t) { last=t; }
+    Recorder(SFCVoid *source, string const &filename) throw(Error);
+    virtual ~Recorder();
+    string const &filename() const
+    {
+        return fn;
+    }
+    virtual void set_bounds(timeref_t t0, timeref_t t1) throw(Error);
+    /*:A t0, t1 refer to the stream's aux.trig, that is, they are relative
+         to the raw stream's start.
+    */
+    virtual timeref_t save_some(timeref_t upto = INFTY) throw(Error);
+    //:A upto refers to the stream itself
+    //:R oldest buffer contents written
+    timeref_t latest() const
+    {
+        return last;
+    }
+    void skip_to(timeref_t t)
+    {
+        last = t;
+    }
 private:
-  void newfile() throw(Error);
+    void newfile() throw(Error);
 protected:
-  SFCVoid *source;
-  string fn;
-  timeref_t last; // refers to the stream
-  timeref_t savefrom, saveto; // refers to the stream
+    SFCVoid *source;
+    string fn;
+    timeref_t last; // refers to the stream
+    timeref_t savefrom, saveto; // refers to the stream
 
-  //#####################
+    //#####################
     TCPDataServer *tcpServer;
 
     //StimSrv *stimSrv;
@@ -63,9 +73,9 @@ protected:
     //#########################
 
 private:
-  FILE *fh;
-  timeref_t current_file_length;
-  int file_seq_no;
+    FILE *fh;
+    timeref_t current_file_length;
+    int file_seq_no;
 };
 
 #endif
