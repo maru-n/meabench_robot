@@ -86,6 +86,23 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
     while (last < end)
     {
+        SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
+        Spikeinfo const &si = (*spikeSrc)[last++];
+        char c = (unsigned char)si.channel;
+        std::cout << (int)c << std::endl;
+
+        int res = fwrite((*source)[last++], tpsiz, 1, fh);
+        if (res != 1)
+        {
+            if (res < 0)
+                throw SysErr("Recorder", "Write error");
+            else
+                throw Error("Recorder", "Write error");
+        }
+    }
+    /*
+    while (last < end)
+    {
         //printf("test\n");
         SpikeSFCli *spikeSrc = dynamic_cast<SpikeSFCli *>(source);
         Spikeinfo const &si = (*spikeSrc)[last++];
@@ -93,17 +110,20 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         std::cout << (int)c << std::endl;
 
         //###########################
-        if(tcpServer->isConnected()) {
+        if (tcpServer->isConnected())
+        {
             //printf("connected and send data\n");
             char c = (unsigned char)si.channel;
             tcpServer->sendRawBytes(&c, 1);
             std::cout << (int)c << std::endl;
-            int receivedSize = tcpServer->receiveRawBytes((char*)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-            for(int i=0; i<receivedSize; i+=2) {
+            int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
+            for (int i = 0; i < receivedSize; i += 2)
+            {
                 int dacNum = (int)receivedDataBuffer[0];
                 int channelNum = (int)receivedDataBuffer[1];
                 std::cout << "DAC#" << dacNum << " Channel#" << channelNum << std::endl;
-                if (dacNum<0 || dacNum>1 || channelNum<0 || channelNum>125) {
+                if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
+                {
                     break;
                 }
                 stimSrv->sendStim(dacNum, channelNum);
@@ -111,8 +131,10 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         }
         //###########################
     }
+    */
     return oldest;
 }
+
 
 void Recorder::set_bounds(timeref_t t0, timeref_t t1) throw(Error)
 {
