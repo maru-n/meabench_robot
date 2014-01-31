@@ -21,16 +21,16 @@ void *StimSrv::thread_func(void *arg){
 
     threadData_t *threadData = (threadData_t*)arg;
     deque<StimData> *pDeque = threadData->deq;
-    char stmsg[128];
+//    char stmsg[128];
 
     while(true){
         if(pDeque->size()>0){
             pthread_mutex_lock(threadData->mtx);
             StimData *stimData = &pDeque->front();
             send(threadData->fpga_sock, &stimData->stimulation, sizeof(stimData->stimulation), 0);
-            memset(&stmsg, 0, sizeof(stmsg));
-            recv(threadData->fpga_sock, stmsg, sizeof(stmsg), 0);
-            fprintf(stderr,"Stimulation reply :: %i\n",(stmsg[0]<<8) + stmsg[1]);
+//            memset(&stmsg, 0, sizeof(stmsg));
+//            recv(threadData->fpga_sock, stmsg, sizeof(stmsg), 0);
+//            fprintf(stderr,"Stimulation reply :: %i\n",(stmsg[0]<<8) + stmsg[1]);
             //cout << stimData->stimulation[2] << "\n";
             pDeque->pop_front();
             pthread_mutex_unlock(threadData->mtx);
@@ -56,10 +56,16 @@ void StimSrv::setup(){
 
 void StimSrv::sendStim(int dac, int channel){
     StimData sData;
+    char stmsg[128];
+
     sData.stimulation[1] = htons(dac);
     sData.stimulation[2] = htons(channel);
     send(threadData.fpga_sock, &sData.stimulation, sizeof(sData.stimulation), 0);
-
+    
+    memset(&stmsg, 0, sizeof(stmsg));
+    recv(threadData.fpga_sock, stmsg, sizeof(stmsg), 0);
+    fprintf(stderr,"Stimulation reply :: %i\n",(stmsg[0]<<8) + stmsg[1]);
+    
 //    StimData sData;
 //    sData.stimulation[1] = htons(dac);
 //    sData.stimulation[2] = htons(channel);
