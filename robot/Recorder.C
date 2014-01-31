@@ -88,7 +88,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
     if (tcpServer->isConnected()) {
         int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-        for (int i = 0; i < 1; i ++)
+        for (int i = 0; i < receivedSize; i ++)
         {
             unsigned char data = receivedDataBuffer[i];
             int dacNum = (int)(data >> 7);
