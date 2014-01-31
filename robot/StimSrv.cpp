@@ -45,6 +45,7 @@ void StimSrv::connectServer(){
 
 void StimSrv::closeServer(){
     close_server(threadData.fpga_sock);
+    pthread_cancel(&thread);
 }
 
 void StimSrv::setup(){
