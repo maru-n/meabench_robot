@@ -68,7 +68,7 @@ protected:
     //#####################
     TCPDataServer *tcpServer;
 
-    //StimSrv *stimSrv;
+    StimSrv *stimSrv;
     //unsigned char* receivedDataBuffer;
     //#########################
 
