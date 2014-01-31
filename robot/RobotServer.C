@@ -376,12 +376,14 @@ void RobotServer::exec()
         time_t endtime_s = limit_s ? starttime_s + limit_s : starttime_s + 1000000;
         while (!Sigint::isset())
         {
+
             if (time(0) > endtime_s)
             {
                 timeout = true;
                 break;
             }
             //int res = sleeper->block();
+            printf("called save_some.\n");
             timeref_t oldest = recorder->save_some();
             if (oldest != INFTY)
                 source->bufuse_update(oldest);
