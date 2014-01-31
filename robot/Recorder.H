@@ -28,7 +28,7 @@
 #include "StimSrv.h"
 
 #define TCP_SERVER_PORT 32130
-#define TCP_MAX_MSG_SIZE 8
+#define TCP_MAX_MSG_SIZE 256
 
 class Recorder
 {

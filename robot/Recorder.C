@@ -105,13 +105,10 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             for (int i = 0; i < receivedSize; i ++)
             {
-                std::cout << "test" << std::endl;
-                std::cout << receivedDataBuffer[i] << std::endl;
-                /*
-                int dacNum = (int)receivedDataBuffer[0];
-                int channelNum = (int)receivedDataBuffer[1];
-                */
-
+                unsigned char data = receivedDataBuffer[i];
+                int dacNum = (int)(data >> 7);
+                int channelNum = (int)(data & 0b01111111);
+                std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
                 /*
                 if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
                 {
