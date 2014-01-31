@@ -23,6 +23,7 @@
 #include <common/Types.H>
 #include <common/Config.H>
 #include <spikesrv/Defs.H>
+#include <time.h>
 
 Recorder::Recorder(SFCVoid *source0,
                    string const &fn0) throw(Error): fn(fn0)
@@ -115,6 +116,10 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                     break;
                 }
                 */
+
+                clock_t start, end;
+                start = clock();
+
                 StimSrv stimSrv;
                 stimSrv.setup();
                 stimSrv.sendStim(0,3);
@@ -122,6 +127,9 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 /*
                 stimSrv->sendStim(dacNum, channelNum);
                 */
+                end = clock();
+                printf( "stimulus take time:%d¥n", end-start );
+
                 std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
             }
         }
