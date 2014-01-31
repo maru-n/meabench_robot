@@ -383,7 +383,6 @@ void RobotServer::exec()
                 break;
             }
             //int res = sleeper->block();
-            printf("called save_some.\n");
             timeref_t oldest = recorder->save_some();
             if (oldest != INFTY)
                 source->bufuse_update(oldest);
