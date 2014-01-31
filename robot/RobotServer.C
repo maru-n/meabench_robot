@@ -376,6 +376,7 @@ void RobotServer::exec()
         time_t endtime_s = limit_s ? starttime_s + limit_s : starttime_s + 1000000;
         while (!Sigint::isset())
         {
+
             if (time(0) > endtime_s)
             {
                 timeout = true;
