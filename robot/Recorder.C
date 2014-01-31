@@ -110,6 +110,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             {
                 int dacNum = (int)receivedDataBuffer[0];
                 int channelNum = (int)receivedDataBuffer[1];
+                printf("test");
                 std::cout << "DAC#" << dacNum << " Channel#" << channelNum << std::endl;
                 /*
                 if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
