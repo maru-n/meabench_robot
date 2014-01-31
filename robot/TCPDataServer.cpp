@@ -149,7 +149,6 @@ int TCPDataServer::receiveRawMsg(char *receiveBytes,  int numBytes)
 
 int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
 {
-    /*
     if( !isConnected() ) {
         std::cerr << "TCPDataServer::receiveRawBytes() :This Server is not connected." << std::endl;
         return -1;
@@ -165,8 +164,6 @@ int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
         return -1;
     }
     return ret;
-    */
-    return -1;
 }
 
 void *TCPDataServer::listening_thread_code(void *arg)
