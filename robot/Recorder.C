@@ -111,7 +111,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             
             stimSrv->sendStim(dacNum, channelNum);
             
-            std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
+//            std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
         }
     }
 
