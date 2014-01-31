@@ -94,19 +94,19 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             int dacNum = (int)(data >> 7);
             int channelNum = (int)(data & 0b01111111);
 
-            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125) {
-                break;
-            }
+//            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125) {
+//                break;
+//            }
 
-            clock_t start, end;
-            start = clock();
+//            clock_t start, end;
+//            start = clock();
 
             StimSrv stimSrv;
             stimSrv.setup();
             stimSrv.sendStim(0,3);
             stimSrv.closeServer();
             end = clock();
-            printf( "stimulus take time:%d¥n", end-start );
+//            printf( "stimulus take time:%d¥n", end-start );
 
             /*
             stimSrv->sendStim(dacNum, channelNum);
