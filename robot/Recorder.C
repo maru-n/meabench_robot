@@ -105,9 +105,9 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             tcpServer->sendRawBytes(&c, 1);
 
             int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-            std::cout << receivedSize << std::endl;
             for (int i = 0; i < receivedSize; i ++)
             {
+                std::cout << "test" << std::endl;
                 std::cout << receivedDataBuffer[i] << std::endl;
                 /*
                 int dacNum = (int)receivedDataBuffer[0];
