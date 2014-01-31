@@ -58,7 +58,7 @@ void StimSrv::sendStim(int dac, int channel){
     StimData sData;
     sData.stimulation[1] = htons(dac);
     sData.stimulation[2] = htons(channel);
-    send(threadData->fpga_sock, &stimData->stimulation, sizeof(stimData->stimulation), 0);
+    send(threadData.fpga_sock, &sData.stimulation, sizeof(sData.stimulation), 0);
 
 //    StimData sData;
 //    sData.stimulation[1] = htons(dac);
