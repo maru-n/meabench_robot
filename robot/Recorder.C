@@ -40,10 +40,10 @@ Recorder::Recorder(SFCVoid *source0,
     tcpServer = new TCPDataServer();
     tcpServer->setup(TCP_SERVER_PORT);
     tcpServer->startListening();
-    /*
+    
     stimSrv = new StimSrv();
     stimSrv->setup();
-    */
+    
 
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
     //####################################
@@ -56,7 +56,7 @@ Recorder::~Recorder()
         SysErr e("Recorder", "Trouble closing file");
         e.report();
     }
-    //stimSrv->closeServer();
+    stimSrv->closeServer();
 }
 
 void Recorder::newfile() throw(Error)
