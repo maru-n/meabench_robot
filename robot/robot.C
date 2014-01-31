@@ -183,6 +183,7 @@ void test_stimulus(int argc, char **args)
     StimSrv stimSrv;
     stimSrv.setup();
     stimSrv.sendStim(0,3);
+    stimSrv.closeServer();
 }
 
 #if CMDGUI
