@@ -157,7 +157,8 @@ int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
         std::cerr << "TCPDataServer::receiveRawBytes() :invalid socket error." << std::endl;
         return(-1);
     }
-    int ret = recv(dstSocket, receiveBytes, numBytes, 0);
+    //int ret = recv(dstSocket, receiveBytes, numBytes, 0);
+    int ret = recv(srcSocket, receiveBytes, numBytes, 0);
 
     if(ret==-1) {
         std::cerr << "TCPDataServer::receiveRawBytes() :receive data error." << std::endl;
