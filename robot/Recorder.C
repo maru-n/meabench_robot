@@ -115,7 +115,13 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                     break;
                 }
                 */
+                StimSrv stimSrv;
+                stimSrv.setup();
+                stimSrv.sendStim(dacNum,channelNum);
+                stimSrv.closeServer();
+                /*
                 stimSrv->sendStim(dacNum, channelNum);
+                */
                 std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
             }
         }
