@@ -25,6 +25,7 @@
 #include <base/Error.H>
 #include <base/SFCVoid.H>
 #include "TCPDataServer.h"
+#include "StimSrv.h"
 
 #define TCP_SERVER_PORT 32130
 
