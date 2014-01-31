@@ -43,9 +43,7 @@ Recorder::Recorder(SFCVoid *source0,
     stimSrv = new StimSrv();
     stimSrv->setup();
 
-    /*
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
-    */
     //####################################
 }
 
