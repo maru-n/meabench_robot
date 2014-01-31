@@ -21,7 +21,7 @@ void *StimSrv::thread_func(void *arg){
 
     threadData_t *threadData = (threadData_t*)arg;
     deque<StimData> *pDeque = threadData->deq;
-    //char stmsg[128];
+    char stmsg[128];
 
     while(true){
         if(pDeque->size()>0){
