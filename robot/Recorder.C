@@ -88,8 +88,8 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
     if (tcpServer->isConnected()) {
         int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-        for (int i = 0; i < receivedSize; i ++)
-        {
+//        for (int i = 0; i < receivedSize; i ++)
+//        {
             unsigned char data = receivedDataBuffer[i];
             int dacNum = (int)(data >> 7);
             int channelNum = (int)(data & 0b01111111);
@@ -112,7 +112,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             stimSrv->sendStim(dacNum, channelNum);
             */
             std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
-        }
+//        }
     }
 
     while (last < end)
