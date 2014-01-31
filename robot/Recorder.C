@@ -98,20 +98,20 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 break;
             }
 
-            clock_t start, end;
-            start = clock();
-
-            StimSrv stimSrv2;
-            stimSrv2.setup();
-            stimSrv2.sendStim(0,3);
-            stimSrv2.closeServer();
-            end = clock();
-            printf( "stimulus take time:%d¥n", end-start );
+//            clock_t start, end;
+//            start = clock();
+//
+//            StimSrv stimSrv2;
+//            stimSrv2.setup();
+//            stimSrv2.sendStim(0,3);
+//            stimSrv2.closeServer();
+//            end = clock();
+//            printf( "stimulus take time:%d¥n", end-start );
 
             
-//            stimSrv->sendStim(dacNum, channelNum);
+            stimSrv->sendStim(dacNum, channelNum);
             
-//            std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
+            std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
         }
     }
 
