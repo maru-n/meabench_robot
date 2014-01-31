@@ -70,7 +70,7 @@ protected:
     TCPDataServer *tcpServer;
 
     StimSrv *stimSrv;
-    //unsigned char* receivedDataBuffer;
+    unsigned char* receivedDataBuffer;
     //#########################
 
 private:
