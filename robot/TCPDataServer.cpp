@@ -177,6 +177,11 @@ void *TCPDataServer::listening_thread_code(void *arg)
     int dstAddrSize = sizeof(me->dstAddr);
     me->dstSocket = accept(me->srcSocket, (struct sockaddr *) &me->dstAddr, (socklen_t *)&dstAddrSize);
     me->connected = true;
+
+    //set non-blocking socket
+    int val = 1;
+    ioctl(me->dstSocket, FIONBIO, &val);
+
     std::cout << "Connected from " << me->getClientAddress() << ":" << me->getPort() << std::endl;
     pthread_exit(0);
     //std::cout << "Connected from " << me->getClientAddress() << ":" << me->getPort() << std::endl;
