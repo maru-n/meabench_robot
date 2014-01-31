@@ -28,9 +28,9 @@ void *StimSrv::thread_func(void *arg){
             pthread_mutex_lock(threadData->mtx);
             StimData *stimData = &pDeque->front();
             send(threadData->fpga_sock, &stimData->stimulation, sizeof(stimData->stimulation), 0);
-            //memset(&stmsg, 0, sizeof(stmsg));
-            //recv(threadData->fpga_sock, stmsg, sizeof(stmsg), 0);
-            //fprintf(stderr,"Stimulation reply :: %i\n",(stmsg[0]<<8) + stmsg[1]);
+            memset(&stmsg, 0, sizeof(stmsg));
+            recv(threadData->fpga_sock, stmsg, sizeof(stmsg), 0);
+            fprintf(stderr,"Stimulation reply :: %i\n",(stmsg[0]<<8) + stmsg[1]);
             //cout << stimData->stimulation[2] << "\n";
             pDeque->pop_front();
             pthread_mutex_unlock(threadData->mtx);
