@@ -40,10 +40,10 @@ Recorder::Recorder(SFCVoid *source0,
     tcpServer = new TCPDataServer();
     tcpServer->setup(TCP_SERVER_PORT);
     tcpServer->startListening();
-    /*
+
     stimSrv = new StimSrv();
     stimSrv->setup();
-    */
+
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
     //####################################
 }
@@ -55,7 +55,7 @@ Recorder::~Recorder()
         SysErr e("Recorder", "Trouble closing file");
         e.report();
     }
-    //stimSrv->closeServer();
+    stimSrv->closeServer();
 }
 
 void Recorder::newfile() throw(Error)
@@ -116,7 +116,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                     break;
                 }
                 */
-
+                /*
                 clock_t start, end;
                 start = clock();
 
@@ -124,12 +124,10 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 stimSrv.setup();
                 stimSrv.sendStim(0,3);
                 stimSrv.closeServer();
-                /*
-                stimSrv->sendStim(dacNum, channelNum);
-                */
                 end = clock();
                 printf( "stimulus take time:%d¥n", end-start );
-
+                */
+                stimSrv->sendStim(dacNum, channelNum);
                 std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
             }
         }
