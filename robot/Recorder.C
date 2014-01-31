@@ -109,12 +109,14 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 unsigned char data = receivedDataBuffer[i];
                 int dacNum = (int)(data >> 7);
                 int channelNum = (int)(data & 0b01111111);
-                std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
+                /*
                 if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
                 {
                     break;
                 }
+                */
                 stimSrv->sendStim(dacNum, channelNum);
+                std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
             }
         }
         //###########################
