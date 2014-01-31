@@ -88,31 +88,31 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
     if (tcpServer->isConnected()) {
         int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-//        for (int i = 0; i < receivedSize; i ++)
-//        {
-            unsigned char data = receivedDataBuffer[0];
+        for (int i = 0; i < 1; i ++)
+        {
+            unsigned char data = receivedDataBuffer[i];
             int dacNum = (int)(data >> 7);
             int channelNum = (int)(data & 0b01111111);
 
-//            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125) {
-//                break;
-//            }
+            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125) {
+                break;
+            }
 
 //            clock_t start, end;
 //            start = clock();
-
-            StimSrv stimSrv;
-            stimSrv.setup();
-            stimSrv.sendStim(0,3);
-            stimSrv.closeServer();
-            end = clock();
+//
+//            StimSrv stimSrv;
+//            stimSrv.setup();
+//            stimSrv.sendStim(0,3);
+//            stimSrv.closeServer();
+//            end = clock();
 //            printf( "stimulus take time:%d¥n", end-start );
 
-            /*
+            
             stimSrv->sendStim(dacNum, channelNum);
-            */
+            
             std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
-//        }
+        }
     }
 
     while (last < end)
