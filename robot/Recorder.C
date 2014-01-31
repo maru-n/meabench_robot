@@ -54,7 +54,7 @@ Recorder::~Recorder()
         SysErr e("Recorder", "Trouble closing file");
         e.report();
     }
-    stimSrv->closeServer();
+    //stimSrv->closeServer();
 }
 
 void Recorder::newfile() throw(Error)

@@ -18,11 +18,11 @@ StimSrv::~StimSrv(){
 }
 
 void *StimSrv::thread_func(void *arg){
-    
+
     threadData_t *threadData = (threadData_t*)arg;
     deque<StimData> *pDeque = threadData->deq;
     //char stmsg[128];
-    
+
     while(true){
         if(pDeque->size()>0){
             pthread_mutex_lock(threadData->mtx);
@@ -34,7 +34,7 @@ void *StimSrv::thread_func(void *arg){
             //cout << stimData->stimulation[2] << "\n";
             pDeque->pop_front();
             pthread_mutex_unlock(threadData->mtx);
-            usleep(STIM_INTERVAL);
+            //usleep(STIM_INTERVAL);
         }
    }
 }
@@ -57,7 +57,7 @@ void StimSrv::sendStim(int dac, int channel){
     StimData sData;
     sData.stimulation[1] = htons(dac);
     sData.stimulation[2] = htons(channel);
-    
+
     pthread_mutex_lock(threadData.mtx);
     threadData.deq->push_back(sData);
     pthread_mutex_unlock(threadData.mtx);
