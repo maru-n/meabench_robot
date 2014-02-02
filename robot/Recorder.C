@@ -110,7 +110,8 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
             
             stimSrv->sendStim(dacNum, channelNum);
-            
+            stimSrv->sendStim(0, 127);//for reduction of noise
+
             std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
         }
     }
