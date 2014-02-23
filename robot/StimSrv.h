@@ -46,7 +46,7 @@ private:
             chipaddress         =    4;     // "slot" where chip is plugged [0-4]
             dacselection        =    0;     // 0->DAC1  1->DAC2
             channel             =  127;     // No stim by default
-            volt                = 1000;     // [+/-mV; millivolt]   [current: 0 to 450 allowed -->> 0 to +/-4.12uA ONLY! for low current mode]
+            volt                = 900;     // [+/-mV; millivolt]   [current: 0 to 450 allowed -->> 0 to +/-4.12uA ONLY! for low current mode]
             stim_mode           =    1;     // [previous==0; voltage==1; current==2]
             phase               =  100;    	// [us; microseconds]
             delay               =    0;     // [0->10,000; milliseconds] delay until stimulating sent to fpga (can change limits in test.c)
