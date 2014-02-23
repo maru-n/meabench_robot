@@ -21,6 +21,7 @@ public:
     void closeServer();
     void setup();
     void sendStim(int dac, int channel);
+    void sendStim(int dac, int channel, int voltage);
 
 private:
     static void *thread_func(void *);
