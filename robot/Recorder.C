@@ -119,7 +119,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             if(dacNum==0) dacNum = 2;
             else if(dacNum==1) dacNum = 3;            
             
-	stimSrv->sendStim(dacNum, channelNum);
+        	stimSrv->sendStim(dacNum, channelNum);
             stimSrv->sendStim(0, 127);//for reduction of noise
 
             std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
