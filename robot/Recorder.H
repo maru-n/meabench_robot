@@ -75,6 +75,7 @@ protected:
     //#########################
 
 private:
+    bool timeKeepFlag;
     FILE *fh;
     timeref_t current_file_length;
     int file_seq_no;
