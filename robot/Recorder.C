@@ -46,6 +46,8 @@ Recorder::Recorder(SFCVoid *source0,
     
 
     receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
+
+    timeKeepFlag = false;
     //####################################
 }
 
@@ -91,6 +93,12 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         for (int i = 0; i < receivedSize; i ++)
         {
             unsigned char data = receivedDataBuffer[i];
+            if (data == 0xff)
+            {
+                printf( "time keep sygnal:%d¥n", clock() );
+                timeKeepFlag = true;
+                continue;
+            }
             int dacNum = (int)(data >> 7);
             int channelNum = (int)(data & 0b01111111);
 
@@ -110,7 +118,8 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 
             if(dacNum==0) dacNum = 2;
             else if(dacNum==1) dacNum = 3;            
-            stimSrv->sendStim(dacNum, channelNum);
+            
+	stimSrv->sendStim(dacNum, channelNum);
             stimSrv->sendStim(0, 127);//for reduction of noise
 
             std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
@@ -137,6 +146,11 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             */
 
             tcpServer->sendRawBytes(&c, 1);
+            if (timeKeepFlag)
+            {    
+                timeKeepFlag = false;
+                printf( "clock time:%d = spike time:%d¥n", clock(), si.time );
+            }
         }
         /*
         if (tcpServer->isConnected()) {
