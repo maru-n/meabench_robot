@@ -149,7 +149,7 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             if (timeKeepFlag)
             {    
                 timeKeepFlag = false;
-                printf( "clock time:%d = spike time:%d¥n", clock(), si.time );
+                printf( "clock time:%ld = spike time:%ld¥n", clock(), si.time );
             }
         }
         /*
