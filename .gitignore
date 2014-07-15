@@ -61,4 +61,6 @@ robot/config.h
 robot/config.h.in
 robot/configure
 robot/configure.ac
+robot/core
 Recorder.Tpo
+config.log
