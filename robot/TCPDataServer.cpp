@@ -167,6 +167,9 @@ int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
         return (-1);
     }
     int ret = recv(dstSocket, receiveBytes, numBytes, 0);
+    if (ret == 0) {
+        connected = false;
+    }
 
     /*
     if(ret==-1) {
