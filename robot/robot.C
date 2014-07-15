@@ -74,7 +74,7 @@ void dorec(string fn, bool date,
            bool trig = false, timeref_t pretrig = 0, timeref_t posttrig = 0,
            bool evenifexists = false)
 {
-  evenifexists = true;
+    evenifexists = true;
 
     //rec_source();
     if (date)
@@ -106,10 +106,10 @@ void dorec(string fn, bool date,
             RobotServer *sr = 0;
             if (trig)
                 sr = new RobotServer((*i).stream, (*i).type, pretrig, posttrig,
-                                   fn, describe, usestream, evenifexists);
+                                     fn, describe, usestream, evenifexists);
             else
                 sr = new RobotServer((*i).stream, (*i).type,
-                                   fn, describe, usestream, evenifexists);
+                                     fn, describe, usestream, evenifexists);
             sr->setcomments(comments);
             srec.push_back(sr);
         }
@@ -182,7 +182,7 @@ void test_stimulus(int argc, char **args)
     printf("Stimulus test for DAC#0, Channel#3");
     StimSrv stimSrv;
     stimSrv.setup();
-    stimSrv.sendStim(0,3);
+    stimSrv.sendStim(0, 3);
     stimSrv.closeServer();
 }
 

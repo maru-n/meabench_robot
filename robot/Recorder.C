@@ -45,7 +45,7 @@ Recorder::Recorder(SFCVoid *source0,
     stimSrv->setup();
 
 
-    receivedDataBuffer = (unsigned char*)malloc(TCP_MAX_MSG_SIZE);
+    receivedDataBuffer = (unsigned char *)malloc(TCP_MAX_MSG_SIZE);
 
     timeKeepFlag = false;
     //####################################
@@ -88,7 +88,8 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
     }*/
 
 
-    if (tcpServer->isConnected()) {
+    if (tcpServer->isConnected())
+    {
         int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
         for (int i = 0; i < receivedSize; i ++)
         {
@@ -102,19 +103,20 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
             int dacNum = (int)(data >> 7);
             int channelNum = (int)(data & 0b01111111);
 
-            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125) {
+            if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
+            {
                 break;
             }
 
-//            clock_t start, end;
-//            start = clock();
-//
-//            StimSrv stimSrv2;
-//            stimSrv2.setup();
-//            stimSrv2.sendStim(0,3);
-//            stimSrv2.closeServer();
-//            end = clock();
-//            printf( "stimulus take time:%d¥n", end-start );
+            //            clock_t start, end;
+            //            start = clock();
+            //
+            //            StimSrv stimSrv2;
+            //            stimSrv2.setup();
+            //            stimSrv2.sendStim(0,3);
+            //            stimSrv2.closeServer();
+            //            end = clock();
+            //            printf( "stimulus take time:%d¥n", end-start );
 
             //if(dacNum==0) dacNum = 2;
             //else if(dacNum==1) dacNum = 3;
@@ -166,21 +168,21 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                     break;
                 }
                 */
-                /*
-                clock_t start, end;
-                start = clock();
+        /*
+        clock_t start, end;
+        start = clock();
 
-                StimSrv stimSrv;
-                stimSrv.setup();
-                stimSrv.sendStim(0,3);
-                stimSrv.closeServer();
-                end = clock();
-                printf( "stimulus take time:%d¥n", end-start );
-                */
-                /*
-                stimSrv->sendStim(dacNum, channelNum);
-                std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
-            }
+        StimSrv stimSrv;
+        stimSrv.setup();
+        stimSrv.sendStim(0,3);
+        stimSrv.closeServer();
+        end = clock();
+        printf( "stimulus take time:%d¥n", end-start );
+        */
+        /*
+        stimSrv->sendStim(dacNum, channelNum);
+        std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
+        }
         }*/
         //###########################
 

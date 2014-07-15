@@ -11,7 +11,8 @@ TCPDataServer::TCPDataServer()
     connected = false;
 }
 
-TCPDataServer::~TCPDataServer() {
+TCPDataServer::~TCPDataServer()
+{
     disconnect();
     close(srcSocket);
 }
@@ -97,7 +98,8 @@ std::string TCPDataServer::getClientAddress()
 
 bool TCPDataServer::send(std::string message)
 {
-    if( !isConnected() ) {
+    if ( !isConnected() )
+    {
         std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
         return false;
     }
@@ -112,7 +114,8 @@ bool TCPDataServer::sendRawMsg(const char *rawMsg, const int numBytes)
 
 bool TCPDataServer::sendRawBytes(const char *rawBytes, const int numBytes)
 {
-    if( !isConnected() ) {
+    if ( !isConnected() )
+    {
         std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
         return false;
     }
@@ -128,12 +131,15 @@ int TCPDataServer::getNumReceivedBytes()
 
 std::string TCPDataServer::receive()
 {
-    char tmpBuff[TCP_MAX_MSG_SIZE+1];
+    char tmpBuff[TCP_MAX_MSG_SIZE + 1];
     int messageSize = receiveRawBytes(tmpBuff, TCP_MAX_MSG_SIZE);
     std::string ret;
-    if(messageSize==0){
+    if (messageSize == 0)
+    {
         ret = "";
-    }else if(messageSize<TCP_MAX_MSG_SIZE) {
+    }
+    else if (messageSize < TCP_MAX_MSG_SIZE)
+    {
         // null terminate!!
         tmpBuff[messageSize] = 0;
         ret = tmpBuff;
@@ -150,13 +156,15 @@ int TCPDataServer::receiveRawMsg(char *receiveBytes,  int numBytes)
 
 int TCPDataServer::receiveRawBytes(char *receiveBytes,  int numBytes)
 {
-    if( !isConnected() ) {
+    if ( !isConnected() )
+    {
         std::cerr << "TCPDataServer::receiveRawBytes() :This Server is not connected." << std::endl;
         return -1;
     }
-    if (dstSocket == -1 ) {
+    if (dstSocket == -1 )
+    {
         std::cerr << "TCPDataServer::receiveRawBytes() :invalid socket error." << std::endl;
-        return(-1);
+        return (-1);
     }
     int ret = recv(dstSocket, receiveBytes, numBytes, 0);
 

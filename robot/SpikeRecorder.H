@@ -24,15 +24,16 @@
 
 #include <record/Recorder.H>
 
-class SpikeRecorder: public Recorder {
+class SpikeRecorder: public Recorder
+{
 public:
-  SpikeRecorder(SFCVoid *source,
-		string const &filename) throw(Error);
-  virtual void set_bounds(timeref_t t0, timeref_t t1) throw(Error);
-  virtual timeref_t save_some(timeref_t upto=INFTY) throw(Error);
+    SpikeRecorder(SFCVoid *source,
+                  string const &filename) throw(Error);
+    virtual void set_bounds(timeref_t t0, timeref_t t1) throw(Error);
+    virtual timeref_t save_some(timeref_t upto = INFTY) throw(Error);
 protected:
-  timeref_t raw_savefrom;
-  timeref_t raw_saveto;
+    timeref_t raw_savefrom;
+    timeref_t raw_saveto;
 };
 
 #endif
