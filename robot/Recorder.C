@@ -61,17 +61,6 @@ Recorder::~Recorder()
     stimSrv->closeServer();
 }
 
-void Recorder::newfile() throw(Error)
-{
-    fclose(fh);
-    fh = 0;
-    file_seq_no++;
-    string myfn = Sprintf("%s-%i", fn.c_str(), file_seq_no);
-    fh = fopen(myfn.c_str(), "wb");
-    if (!fh)
-        throw SysErr("Recorder", "Cannot create continuation file");
-    current_file_length = 0;
-}
 
 timeref_t Recorder::save_some(timeref_t upto) throw(Error)
 {
@@ -108,18 +97,6 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 break;
             }
 
-            //            clock_t start, end;
-            //            start = clock();
-            //
-            //            StimSrv stimSrv2;
-            //            stimSrv2.setup();
-            //            stimSrv2.sendStim(0,3);
-            //            stimSrv2.closeServer();
-            //            end = clock();
-            //            printf( "stimulus take time:%d¥n", end-start );
-
-            //if(dacNum==0) dacNum = 2;
-            //else if(dacNum==1) dacNum = 3;
 
             stimSrv->sendStim(dacNum, channelNum);
             //stimSrv->sendStim(2, 127);//for reduction of noise
@@ -135,18 +112,9 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
         char c = (unsigned char)si.channel;
 
         //###########################
-        /*
-        printf("%d\n", (int)c);
-        fflush(stdout);
-        */
 
         if (tcpServer->isConnected())
         {
-            /*
-            printf("%d\n", (int)c);
-            fflush(stdout);
-            */
-
             tcpServer->sendRawBytes(&c, 1);
             if (timeKeepFlag)
             {
@@ -154,36 +122,6 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
                 printf( "clock time:%ld = spike time:%ld¥n", clock(), si.time );
             }
         }
-        /*
-        if (tcpServer->isConnected()) {
-            int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
-            for (int i = 0; i < receivedSize; i ++)
-            {
-                unsigned char data = receivedDataBuffer[i];
-                int dacNum = (int)(data >> 7);
-                int channelNum = (int)(data & 0b01111111);
-                /*
-                if (dacNum < 0 || dacNum > 1 || channelNum < 0 || channelNum > 125)
-                {
-                    break;
-                }
-                */
-        /*
-        clock_t start, end;
-        start = clock();
-
-        StimSrv stimSrv;
-        stimSrv.setup();
-        stimSrv.sendStim(0,3);
-        stimSrv.closeServer();
-        end = clock();
-        printf( "stimulus take time:%d¥n", end-start );
-        */
-        /*
-        stimSrv->sendStim(dacNum, channelNum);
-        std::cout << "DAC#" << dacNum << " channel#" << channelNum << std::endl;
-        }
-        }*/
         //###########################
 
     }
