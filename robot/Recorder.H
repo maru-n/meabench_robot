@@ -59,8 +59,7 @@ public:
     {
         last = t;
     }
-private:
-    void newfile() throw(Error);
+
 protected:
     SFCVoid *source;
     string fn;
