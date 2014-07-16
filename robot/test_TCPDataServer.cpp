@@ -16,18 +16,23 @@ int main()
     start_listening(server);
 
     unsigned char* receivedDataBuffer = (unsigned char *)malloc(TCP_MAX_MSG_SIZE);
+    int i=0;
 
     while(true) {
+        i++;
         if(server->isConnected()) {
+
             int receivedSize = server->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
             if (receivedSize == 0) {
                 std::cout << "disconected" << std::endl;
                 start_listening(server);
-            }else{
+            }else if(receivedSize > 0) {
+                std::cout << receivedDataBuffer << std::endl;
                 std::stringstream ss;
-                ss << "test" << std::endl;
+                ss << "echo: " << receivedDataBuffer << std::endl;
                 server->send(ss.str());
             }
+            server->send("test\n");
         }
     }
     std::cout << "end" << std::endl;

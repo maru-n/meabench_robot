@@ -9,6 +9,7 @@ TCPDataServer::TCPDataServer()
 {
     setuped = false;
     connected = false;
+    waitingConnection = false;
 }
 
 TCPDataServer::~TCPDataServer()
@@ -100,7 +101,7 @@ bool TCPDataServer::send(std::string message)
 {
     if ( !isConnected() )
     {
-        std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
+        std::cerr << "TCPDataServer::send() :This Server is not connected." << std::endl;
         return false;
     }
     write(dstSocket, message.c_str(), message.size());
@@ -116,7 +117,7 @@ bool TCPDataServer::sendRawBytes(const char *rawBytes, const int numBytes)
 {
     if ( !isConnected() )
     {
-        std::cerr << "TCPDataServer::startListening() :This Server is not connected." << std::endl;
+        std::cerr << "TCPDataServer::sendRawBytes() :This Server is not connected." << std::endl;
         return false;
     }
     write(dstSocket, rawBytes, numBytes);

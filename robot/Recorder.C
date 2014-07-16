@@ -69,17 +69,17 @@ timeref_t Recorder::save_some(timeref_t upto) throw(Error)
     timeref_t end = min(min(saveto, upto), source->latest());
     unsigned int tpsiz = source->datasize();
     timeref_t oldest = min(last, end);
-    /*
-    if (end>last) {
-      current_file_length += (end-last)*tpsiz;
-      if (current_file_length > LONGESTFILE)
-        newfile();
-    }*/
 
 
     if (tcpServer->isConnected())
     {
         int receivedSize = tcpServer->receiveRawBytes((char *)receivedDataBuffer, TCP_MAX_MSG_SIZE);
+        if (receivedSize == 0)
+        {
+            std::cout << "Disconected by client." << std::endl;
+            tcpServer->startListening();
+        }
+
         for (int i = 0; i < receivedSize; i ++)
         {
             unsigned char data = receivedDataBuffer[i];

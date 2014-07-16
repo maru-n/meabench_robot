@@ -18,6 +18,10 @@ public:
     {
         return connected;
     }
+    virtual bool isWaitingConnection()
+    {
+        return waitingConnection;
+    }
 
     virtual int getPort() = 0;
     virtual int getClientPort() = 0;
@@ -34,6 +38,7 @@ public:
     virtual int receiveRawBytes(char *receiveBytes,  int numBytes) = 0;
 
 protected:
+    bool waitingConnection;
     bool connected;
     bool setuped;
 };
